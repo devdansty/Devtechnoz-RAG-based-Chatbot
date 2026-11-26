@@ -22,9 +22,6 @@ devtechnoz-ingest = "devtechnoz_rag.ingestion_pipline:main"
 devtechnoz-chat = "devtechnoz_rag.rag_chat:main"
 devtechnoz-web = "devtechnoz_rag.web_frontend:main"
 
-[tool.setuptools]
-package-dir = {"" = "src"}
-
 [tool.setuptools.packages.find]
 where = ["src"]
 include = ["devtechnoz_rag*"]

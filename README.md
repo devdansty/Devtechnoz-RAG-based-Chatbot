@@ -3,6 +3,8 @@
 A Pinecone-backed retrieval-augmented chat application with a Groq-powered
 terminal interface and a test-only web frontend.
 
+Try the deployed chatbot at [devtechnoz-chatbot.up.railway.app](https://devtechnoz-chatbot.up.railway.app).
+
 ## Project layout
 
 | File or folder | Purpose |
