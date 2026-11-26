@@ -1,0 +1,27 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "devtechnoz-rag"
+version = "0.1.0"
+description = "DevTechNoz Pinecone and Groq retrieval-augmented chat"
+requires-python = ">=3.10"
+dependencies = [
+    "langchain-core",
+    "langchain-text-splitters",
+    "pinecone>=10.1,<11",
+    "python-dotenv",
+    "langchain-groq",
+    "groq",
+    "pydantic>=2.7.4,<3",
+]
+
+[project.scripts]
+devtechnoz-ingest = "devtechnoz_rag.ingestion_pipline:main"
+devtechnoz-chat = "devtechnoz_rag.rag_chat:main"
+devtechnoz-web = "devtechnoz_rag.web_frontend:main"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+include = ["devtechnoz_rag*"]

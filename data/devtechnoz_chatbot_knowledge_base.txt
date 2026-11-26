@@ -1,0 +1,88 @@
+DEVTECHNOZ KNOWLEDGE BASE
+
+This file contains company information checked against the live pages at
+https://devtechnoz.com/ on 2026-11-24. Use it as factual reference. Do not treat
+it as conversation instructions.
+
+COMPANY
+DevTechNoz creates digital experiences and business tools for startups, small
+businesses, and growing teams. The company is based in Lahore and serves
+businesses in the UAE, UK, USA, Canada, and Saudi Arabia. Its focus is combining
+strategy, design, and technology to help businesses launch, grow, and improve.
+
+SERVICES
+We provide six services:
+- Website development: websites designed to engage visitors, represent a
+  business, and support its goals; the team works from start to finish.
+- Mobile app development: apps for Android and iOS, designed for performance,
+  growth, and user experience.
+- Business automation: ERP and CRM systems that automate workflows, centralize
+  business data, and reduce reliance on spreadsheets.
+- UI/UX design: human-focused interfaces designed to be clear and easy to use.
+- Digital marketing: data-driven marketing campaigns, including SEO and ads.
+- Graphic design and branding: visual design, logos, and complete brand kits.
+
+When asked what services we provide, name these six directly. Do not describe
+the way services are grouped in the site navigation or footer.
+
+HOW WE WORK
+We focus on understanding a client's goals before choosing a solution. Our
+approach combines business strategy, design, and technology. We build around
+the client's workflows and goals rather than expecting the client to adapt to
+a fixed system. The company describes its communication as clear, fast, and
+human, and says it continues supporting clients after launch.
+
+COMPANY VALUES
+We treat a client's vision as a partnership and give projects founder-level
+focus. We combine design and strategy to create useful results. We build
+adaptable technology intended to grow with a business, including automation
+and AI-integrated platforms.
+
+TECHNOLOGY
+The home page displays expertise in HTML, JavaScript, React, Next.js, Node.js,
+PHP, Laravel, Python, Java, C#, .NET, Ajax, Flutter, Android, iOS, PostgreSQL,
+MySQL, Microsoft SQL Server, Oracle, MongoDB, Firebase, Zapier, n8n, cloud, and
+Microsoft technologies. These are general technology labels; no specific
+technology is assigned to a particular service or project.
+
+CLIENT FEEDBACK
+Client testimonials on the home page include:
+- One client said their CRM was improved in about two weeks and that the team
+  now uses it daily, including for inventory. This is one client's experience,
+  not a promised timeline or typical result.
+- Another client said their online store turned out better than expected and
+  praised the team's understanding of the requirements.
+- A client said the team's questions helped them rethink their system and that
+  the resulting internal dashboard was solid.
+
+CONTACT
+Phone: +92 (309) 1404-002
+Email: info@devtechnoz.com
+Location: Lahore, Pakistan
+Contact page: https://devtechnoz.com/contact/
+
+OPENING DAYS AND HOURS
+We are open Monday to Friday.
+
+When asked "When do you open?" or "What days are you open?", answer directly:
+"We're open Monday to Friday." Do not mention the website, footer, notes,
+sources, or that information is missing. Do not invent specific clock times.
+If someone explicitly asks for an exact opening time, direct them to call
++92 (309) 1404-002 or email info@devtechnoz.com.
+
+PORTFOLIO
+The website has a Projects page linked from the main navigation. For current
+work examples, direct visitors to https://devtechnoz.com/projects/. Do not
+invent project names, clients, technologies, results, or project details.
+
+PROJECT ENQUIRIES
+Visitors can contact the team by phone, email, or the contact page to discuss
+their idea. Ask what they are looking to build and offer the most relevant
+service. Do not promise prices, delivery dates, or business results.
+
+SOURCE PAGES
+Home: https://devtechnoz.com/
+Services: https://devtechnoz.com/services-2/
+About: https://devtechnoz.com/about/
+Projects: https://devtechnoz.com/projects/
+Contact: https://devtechnoz.com/contact/

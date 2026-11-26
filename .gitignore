@@ -1,0 +1,13 @@
+.env
+.venv/
+venv/
+__pycache__/
+*.py[cod]
+conversation_history.json
+conversation_history.json.tmp
+conversation_history_*.json
+conversation_history_*.json.tmp
+/data/conversations/
+build/
+dist/
+*.egg-info/
