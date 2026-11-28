@@ -1,23 +1,84 @@
-"""Load the DevTechNoz knowledge base and store it in Pinecone."""
+"""Parse structured DevTechNoz knowledge documents and store them in Pinecone."""
 
 from __future__ import annotations
 
 import argparse
 import os
+import re
 from pathlib import Path
 
 from dotenv import load_dotenv
 from langchain_core.documents import Document
-from langchain_text_splitters import RecursiveCharacterTextSplitter
 from pinecone import Pinecone, SchemaBuilder
 
 from .paths import DATA_DIR, PROJECT_ROOT
 
 DEFAULT_SOURCE = DATA_DIR / "devtechnoz_chatbot_knowledge_base.txt"
-CHUNK_SIZE = 500
+CHUNK_SIZE = 2_000
 BATCH_SIZE = 96
 DEFAULT_EMBEDDING_MODEL = "llama-text-embed-v2"
 TEXT_FIELD = "chunk_text"
+
+CHUNK_HEADER_PATTERN = re.compile(
+    r"^=== CHUNK:\s*(?P<document_id>[^|]+?)\s*"
+    r"\|\s*TITLE:\s*(?P<title>.*?)\s*"
+    r"\|\s*CATEGORY:\s*(?P<category>.*?)\s*"
+    r"\|\s*STATUS:\s*(?P<status>.*?)\s*===[ \t]*$",
+    re.MULTILINE,
+)
+CHUNK_MARKER_PATTERN = re.compile(r"^=== CHUNK:", re.MULTILINE)
+SECTION_LINE_PATTERN = re.compile(
+    r"^(?:#{20,}|PART [A-Z]\b.*)$",
+    re.MULTILINE,
+)
+
+
+def _parse_documents(text: str, source: str) -> list[Document]:
+    """Parse each explicit knowledge-base chunk into a standalone document."""
+    matches = list(CHUNK_HEADER_PATTERN.finditer(text))
+    marker_count = len(CHUNK_MARKER_PATTERN.findall(text))
+    if marker_count != len(matches):
+        raise ValueError("The knowledge base contains a malformed CHUNK header.")
+    if not matches:
+        raise ValueError(
+            "The knowledge base has no structured CHUNK headers to ingest."
+        )
+
+    documents: list[Document] = []
+    for position, match in enumerate(matches):
+        next_start = (
+            matches[position + 1].start()
+            if position + 1 < len(matches)
+            else len(text)
+        )
+        body = text[match.end() : next_start]
+        body = SECTION_LINE_PATTERN.sub("", body).strip()
+        if not body:
+            raise ValueError(
+                f"Knowledge document '{match.group('document_id').strip()}' is empty."
+            )
+
+        header = match.group(0).strip()
+        page_content = f"{header}\n{body}"
+        if len(page_content) > CHUNK_SIZE:
+            document_id = match.group("document_id").strip()
+            raise ValueError(
+                f"Knowledge document '{document_id}' is {len(page_content)} "
+                f"characters; the maximum is {CHUNK_SIZE}. Split it into smaller "
+                "self-contained CHUNK documents in the source file."
+            )
+
+        metadata = {
+            "source": source,
+            "start_index": match.start(),
+            "document_id": match.group("document_id").strip(),
+            "title": match.group("title").strip(),
+            "category": match.group("category").strip(),
+            "status": match.group("status").strip(),
+        }
+        documents.append(Document(page_content=page_content, metadata=metadata))
+
+    return documents
 
 
 def ingest_documents(
@@ -28,23 +89,15 @@ def ingest_documents(
     cloud: str,
     region: str,
 ) -> int:
-    """Split a text file and let Pinecone embed and store its chunks."""
+    """Ingest structured documents, preserving their source-defined boundaries."""
     if not source_path.is_file():
         raise FileNotFoundError(f"Source document was not found: {source_path}")
 
-    splitter = RecursiveCharacterTextSplitter(
-        chunk_size=CHUNK_SIZE,
-        chunk_overlap=0,
-        length_function=len,
-        add_start_index=True,
-    )
     text = source_path.read_text(encoding="utf-8")
-    source = str(source_path.resolve())
     if not text.strip():
         raise ValueError(f"Source document is empty: {source_path}")
-
-    documents = [Document(page_content=text, metadata={"source": source})]
-    chunks = splitter.split_documents(documents)
+    source = str(source_path.resolve())
+    documents = _parse_documents(text, source)
 
     pinecone = Pinecone(api_key=os.environ["PINECONE_API_KEY"])
     if pinecone.has_index(index_name):
@@ -74,12 +127,16 @@ def ingest_documents(
 
     records = [
         {
-            "_id": f"chunk-{chunk.metadata['start_index']}",
-            TEXT_FIELD: chunk.page_content,
+            "_id": f"chunk-{document.metadata['start_index']}",
+            TEXT_FIELD: document.page_content,
             "source": source,
-            "start_index": chunk.metadata["start_index"],
+            "start_index": document.metadata["start_index"],
+            "document_id": document.metadata["document_id"],
+            "title": document.metadata["title"],
+            "category": document.metadata["category"],
+            "status": document.metadata["status"],
         }
-        for chunk in chunks
+        for document in documents
     ]
     for batch_start in range(0, len(records), BATCH_SIZE):
         index.documents.upsert(
@@ -110,7 +167,7 @@ def ingest_documents(
             ids=stale_ids[batch_start : batch_start + BATCH_SIZE],
         )
 
-    return len(chunks)
+    return len(documents)
 
 
 def main() -> None:
@@ -166,7 +223,7 @@ def main() -> None:
         parser.error(str(error))
 
     print(
-        f"Successfully stored {chunk_count} chunks in Pinecone index "
+        f"Successfully stored {chunk_count} documents in Pinecone index "
         f"'{args.index_name}' (namespace '{args.namespace}')."
     )
 
