@@ -15,7 +15,12 @@ from devtechnoz_rag.conversation_history import (
     ConversationHistory,
 )
 from devtechnoz_rag.paths import PROJECT_ROOT
-from devtechnoz_rag.rag_chat import DEFAULT_MODEL, stream_answer
+from devtechnoz_rag.rag_chat import (
+    DEFAULT_MODEL,
+    generate_whatsapp_message,
+    has_explicit_handoff_intent,
+    stream_answer,
+)
 
 
 class ConversationHistoryTests(unittest.TestCase):
@@ -88,6 +93,83 @@ class ConversationHistoryTests(unittest.TestCase):
 
         self.assertEqual(answer, "Answer")
         self.assertEqual(chat_groq.call_args.kwargs["model"], DEFAULT_MODEL)
+
+    def test_whatsapp_message_uses_recent_history_and_groq_configuration(self) -> None:
+        history = [
+            ("human", "I want a CRM for my small business."),
+            ("assistant", "What would you like the CRM to do?"),
+            ("human", "Yes"),
+        ]
+        with (
+            patch("devtechnoz_rag.rag_chat.load_dotenv"),
+            patch.dict(
+                os.environ,
+                {"GROQ_API_KEY": "test-key", "GROQ_MODEL": "test-model"},
+            ),
+            patch("devtechnoz_rag.rag_chat.ChatGroq") as chat_groq,
+        ):
+            chat_groq.return_value.invoke.return_value = SimpleNamespace(
+                content="Hi DevTechNoz, I need a CRM for my small business. Could your team help?",
+            )
+
+            message = generate_whatsapp_message(history)
+
+        self.assertEqual(
+            message,
+            "Hi DevTechNoz, I need a CRM for my small business. Could your team help?",
+        )
+        kwargs = chat_groq.call_args.kwargs
+        self.assertEqual(kwargs["api_key"].get_secret_value(), "test-key")
+        self.assertEqual(kwargs["model"], "test-model")
+        self.assertEqual(kwargs["streaming"], False)
+        self.assertEqual(kwargs["max_tokens"], 220)
+        invoked_messages = chat_groq.return_value.invoke.call_args.args[0]
+        self.assertIn("I want a CRM for my small business.", invoked_messages[1][1])
+        self.assertIn("Yes", invoked_messages[1][1])
+
+    def test_whatsapp_message_requires_conversation_history(self) -> None:
+        with (
+            patch("devtechnoz_rag.rag_chat.load_dotenv"),
+            patch.dict(os.environ, {"GROQ_API_KEY": "test-key"}),
+            patch("devtechnoz_rag.rag_chat.ChatGroq") as chat_groq,
+        ):
+            with self.assertRaisesRegex(ValueError, "conversation history is required"):
+                generate_whatsapp_message([])
+
+        chat_groq.assert_not_called()
+
+    def test_handoff_intent_does_not_treat_ambiguous_yes_as_consent(self) -> None:
+        self.assertFalse(
+            has_explicit_handoff_intent(
+                [
+                    ("human", "I want a CRM for my business."),
+                    ("assistant", "Tell me more about your CRM project."),
+                    ("human", "Yes"),
+                ]
+            )
+        )
+        self.assertFalse(
+            has_explicit_handoff_intent(
+                [
+                    ("assistant", "Would you like to speak to a person or continue here?"),
+                    ("human", "Yes"),
+                ]
+            )
+        )
+        self.assertTrue(
+            has_explicit_handoff_intent(
+                [
+                    ("assistant", "Would you like me to connect you with our team?"),
+                    ("human", "Yes"),
+                ]
+            )
+        )
+        self.assertTrue(
+            has_explicit_handoff_intent(
+                [("human", "Please connect me with a real person.")]
+            )
+        )
+        self.assertTrue(has_explicit_handoff_intent([("human", "Person")]))
 
     def test_completed_exchanges_persist_and_reload(self) -> None:
         with tempfile.TemporaryDirectory() as directory:
