@@ -80,11 +80,11 @@ Contact information.
 
             documents_api = SimpleNamespace(
                 upsert=Mock(),
-                list=Mock(return_value=[SimpleNamespace(id="chunk-stale")]),
+                list=Mock(return_value=[SimpleNamespace(id="chunk-0")]),
                 fetch=Mock(
                     return_value=SimpleNamespace(
                         documents={
-                            "chunk-stale": {"source": str(source_path.resolve())}
+                            "chunk-0": {"source": str(source_path.resolve())}
                         }
                     )
                 ),
@@ -112,12 +112,75 @@ Contact information.
         records = documents_api.upsert.call_args.kwargs["documents"]
         self.assertEqual(count, 2)
         self.assertEqual([record["document_id"] for record in records], ["A01", "A02"])
+        self.assertEqual([record["_id"] for record in records], ["chunk-A01", "chunk-A02"])
         self.assertEqual(records[0]["category"], "company")
         self.assertEqual(records[0]["status"], "VERIFIED")
         self.assertIn("=== CHUNK: A01", records[0]["chunk_text"])
         documents_api.delete.assert_called_once_with(
             namespace="test-namespace",
-            ids=["chunk-stale"],
+            ids=["chunk-0"],
+        )
+
+    def test_record_ids_stay_stable_when_document_offsets_change(self) -> None:
+        with tempfile.TemporaryDirectory() as directory:
+            source_path = Path(directory) / "knowledge.txt"
+
+            def ingest(text: str) -> list[dict[str, object]]:
+                source_path.write_text(text, encoding="utf-8")
+                documents_api = SimpleNamespace(
+                    upsert=Mock(),
+                    list=Mock(return_value=[]),
+                    fetch=Mock(),
+                    delete=Mock(),
+                )
+                index = SimpleNamespace(documents=documents_api)
+                pinecone = Mock()
+                pinecone.has_index.return_value = True
+                pinecone.describe_index.return_value = SimpleNamespace(host="index-host")
+                pinecone.index.return_value = index
+
+                with (
+                    patch.dict(os.environ, {"PINECONE_API_KEY": "test-key"}),
+                    patch(
+                        "devtechnoz_rag.ingestion_pipline.Pinecone",
+                        return_value=pinecone,
+                    ),
+                ):
+                    ingest_documents(
+                        source_path=source_path,
+                        index_name="test-index",
+                        namespace="test-namespace",
+                        embedding_model="test-model",
+                        cloud="aws",
+                        region="us-east-1",
+                    )
+
+                return documents_api.upsert.call_args.kwargs["documents"]
+
+            first_records = ingest(
+                "=== CHUNK: A01 | TITLE: Company | CATEGORY: company | STATUS: VERIFIED ===\n"
+                "Short.\n"
+                "=== CHUNK: A02 | TITLE: Contact | CATEGORY: contact | STATUS: VERIFIED ===\n"
+                "Contact information.\n"
+            )
+            updated_records = ingest(
+                "=== CHUNK: A01 | TITLE: Company | CATEGORY: company | STATUS: VERIFIED ===\n"
+                "A longer company description that shifts following source offsets.\n"
+                "=== CHUNK: A02 | TITLE: Contact | CATEGORY: contact | STATUS: VERIFIED ===\n"
+                "Contact information.\n"
+            )
+
+        self.assertEqual(
+            [record["_id"] for record in first_records],
+            ["chunk-A01", "chunk-A02"],
+        )
+        self.assertEqual(
+            [record["_id"] for record in updated_records],
+            ["chunk-A01", "chunk-A02"],
+        )
+        self.assertNotEqual(
+            first_records[1]["start_index"],
+            updated_records[1]["start_index"],
         )
 
 
