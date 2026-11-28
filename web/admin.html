@@ -1,0 +1,67 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#070a0c">
+    <meta name="robots" content="noindex, nofollow">
+    <title>Chat history | DevTechNoz</title>
+    <link rel="stylesheet" href="/admin.css">
+    <script src="/admin.js" defer></script>
+  </head>
+  <body>
+    <main class="admin-shell">
+      <header class="admin-header">
+        <a class="admin-brand" href="/">DEVTECHNOZ <span>CHAT HISTORY</span></a>
+        <a class="back-link" href="/">Back to website</a>
+      </header>
+
+      <section class="login-card" id="login-card">
+        <p class="eyebrow">Private administration</p>
+        <h1>Conversation history</h1>
+        <p>Enter the configured admin password to view and manage saved chats.</p>
+        <form id="login-form">
+          <label for="admin-password">Admin password</label>
+          <input
+            id="admin-password"
+            type="password"
+            maxlength="256"
+            autocomplete="current-password"
+            required
+          >
+          <button type="submit">Sign in</button>
+        </form>
+        <p class="status" id="login-status" role="status"></p>
+      </section>
+
+      <section class="dashboard" id="dashboard" hidden>
+        <div class="dashboard-heading">
+          <div>
+            <p class="eyebrow">Saved conversations</p>
+            <h1>Chat history</h1>
+          </div>
+          <div class="dashboard-actions">
+            <button class="button-secondary" id="logout-button" type="button">Sign out</button>
+            <button class="button-danger" id="delete-all-button" type="button">
+              Delete all
+            </button>
+          </div>
+        </div>
+        <p class="status" id="dashboard-status" role="status"></p>
+        <div class="admin-columns">
+          <section class="conversation-list" aria-label="Conversation list">
+            <h2>Conversations</h2>
+            <div id="conversation-items"></div>
+            <button class="button-secondary load-more-button" id="load-more-button" type="button" hidden>
+              Load older conversations
+            </button>
+          </section>
+          <section class="transcript" aria-label="Selected conversation">
+            <h2 id="transcript-title">Select a conversation</h2>
+            <div id="transcript-messages"></div>
+          </section>
+        </div>
+      </section>
+    </main>
+  </body>
+</html>
