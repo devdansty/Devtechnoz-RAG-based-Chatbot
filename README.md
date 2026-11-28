@@ -22,8 +22,8 @@ Try the deployed chatbot at [devtechnoz-chatbot.up.railway.app](https://devtechn
 | [`src/devtechnoz_rag/conversation_history.py`](./src/devtechnoz_rag/conversation_history.py) | Saves and loads terminal chat sessions as JSON. |
 | [`src/devtechnoz_rag/ingestion_pipline.py`](./src/devtechnoz_rag/ingestion_pipline.py) | Splits the knowledge base and uploads it to Pinecone. |
 | [`src/devtechnoz_rag/retrieval_pipline.py`](./src/devtechnoz_rag/retrieval_pipline.py) | Searches Pinecone and ranks diverse results with MMR. |
-| [`src/devtechnoz_rag/rag_chat.py`](./src/devtechnoz_rag/rag_chat.py) | Builds the RAG prompt and streams Groq answers for terminal chat. |
-| [`src/devtechnoz_rag/web_frontend.py`](./src/devtechnoz_rag/web_frontend.py) | Serves the website, streaming chat API, and protected transcript admin API. |
+| [`src/devtechnoz_rag/rag_chat.py`](./src/devtechnoz_rag/rag_chat.py) | Builds the RAG prompt, streams Groq answers, and drafts context-aware WhatsApp handoff messages. |
+| [`src/devtechnoz_rag/web_frontend.py`](./src/devtechnoz_rag/web_frontend.py) | Serves the website, chat and WhatsApp-draft APIs, and protected transcript admin API. |
 | [`src/devtechnoz_rag/chat_history_store.py`](./src/devtechnoz_rag/chat_history_store.py) | Persists website conversations in PostgreSQL. |
 | [`tests/`](./tests/) | Automated unit and HTTP endpoint tests. |
 | [`tests/test_conversation_history.py`](./tests/test_conversation_history.py) | Covers session persistence and history-aware answers. |
