@@ -4,11 +4,20 @@ const closeButton = document.querySelector("#chat-close");
 const form = document.querySelector("#chat-form");
 const input = document.querySelector("#chat-input");
 const sendButton = document.querySelector("#send-button");
+const whatsappButton = document.querySelector("#whatsapp-button");
 const messages = document.querySelector("#chat-messages");
 const quickPrompts = document.querySelector("#quick-prompts");
 const status = document.createElement("div");
 const conversation = [];
+const conversationStorageKey = "devtechnoz-chat-conversation-id";
+const uuidPattern = /^[0-9a-f]{8}-[0-9a-f]{4}-[1-8][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i;
+let conversationId = localStorage.getItem(conversationStorageKey);
+if (!conversationId || !uuidPattern.test(conversationId)) {
+  conversationId = crypto.randomUUID();
+  localStorage.setItem(conversationStorageKey, conversationId);
+}
 let isSending = false;
+let latestQuestion = "";
 
 status.className = "chat-status";
 status.hidden = true;
@@ -59,6 +68,72 @@ function addMessage(role, text) {
   return bubble;
 }
 
+function renderContactLinks(bubble, text, question) {
+  const contactPattern =
+    /(?:\+?92[\s().-]*309[\s().-]*1404[\s().-]*002|\b(?:info|contact)@devtechnoz\.com\b)/gi;
+  let cursor = 0;
+  bubble.replaceChildren();
+
+  for (const match of text.matchAll(contactPattern)) {
+    const contact = match[0];
+    const start = match.index;
+    bubble.append(document.createTextNode(text.slice(cursor, start)));
+
+    const link = document.createElement("a");
+    link.textContent = contact;
+    if (contact.includes("@")) {
+      link.href = `mailto:${contact}`;
+    } else {
+      link.href = whatsappUrl(question);
+      link.target = "_blank";
+      link.rel = "noopener noreferrer";
+    }
+    bubble.append(link);
+    cursor = start + contact.length;
+  }
+
+  bubble.append(document.createTextNode(text.slice(cursor)));
+}
+
+function whatsappUrl(question) {
+  const message = `Hi, I have a question about: ${question}`;
+  return `https://wa.me/923091404002?text=${encodeURIComponent(message)}`;
+}
+
+function updateWhatsAppButton() {
+  const question = input.value.trim() || latestQuestion;
+  whatsappButton.href = question ? whatsappUrl(question) : "#";
+  whatsappButton.setAttribute("aria-disabled", String(!question));
+}
+
+async function restoreSavedConversation() {
+  const response = await fetch("/api/chat/history", {
+    headers: { "X-Conversation-ID": conversationId },
+  });
+  if (!response.ok) {
+    const problem = await response.json().catch(() => ({}));
+    throw new Error(problem.error || `History request failed (${response.status}).`);
+  }
+
+  const payload = await response.json();
+  if (!payload.enabled || !Array.isArray(payload.messages)) return;
+  for (const message of payload.messages) {
+    if (
+      !message ||
+      !["human", "assistant"].includes(message.role) ||
+      typeof message.content !== "string"
+    ) {
+      throw new Error("The saved conversation contains an invalid message.");
+    }
+    conversation.push([message.role, message.content]);
+    const bubble = addMessage(message.role, message.content);
+    if (message.role === "human") latestQuestion = message.content;
+    else renderContactLinks(bubble, message.content, latestQuestion);
+  }
+  if (conversation.length > 20) conversation.splice(0, conversation.length - 20);
+  updateWhatsAppButton();
+}
+
 function setBusy(isBusy) {
   isSending = isBusy;
   sendButton.disabled = isBusy;
@@ -100,7 +175,11 @@ async function streamReply(question, bubble) {
   const response = await fetch("/api/chat", {
     method: "POST",
     headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ question, history: recentHistory() }),
+    body: JSON.stringify({
+      conversation_id: conversationId,
+      question,
+      history: recentHistory(),
+    }),
   });
   if (!response.ok) {
     const problem = await response.json().catch(() => ({}));
@@ -138,26 +217,41 @@ async function sendMessage(rawText) {
   const question = rawText.trim();
   if (!question || isSending) return;
 
-  quickPrompts.hidden = true;
-  addMessage("human", question);
-  const replyBubble = addMessage("assistant", "");
-  replyBubble.classList.add("streaming");
   setBusy(true);
+  let replyBubble;
 
   try {
+    await historyReady;
+    latestQuestion = question;
+    updateWhatsAppButton();
+    quickPrompts.hidden = true;
+    addMessage("human", question);
+    replyBubble = addMessage("assistant", "");
+    replyBubble.classList.add("streaming");
+
     const answer = await streamReply(question, replyBubble);
     conversation.push(["human", question], ["assistant", answer]);
     if (conversation.length > 20) conversation.splice(0, conversation.length - 20);
-    if (!answer) replyBubble.textContent = "I couldn't find an answer just now. Please try again.";
+    if (answer) renderContactLinks(replyBubble, answer, question);
+    else replyBubble.textContent = "I couldn't find an answer just now. Please try again.";
   } catch (error) {
-    replyBubble.classList.remove("streaming");
-    replyBubble.textContent = replyBubble.textContent
-      ? `${replyBubble.textContent}\n\n${error.message}`
-      : `Sorry, I couldn't complete that reply. ${error.message}`;
-    replyBubble.setAttribute("role", "alert");
+    if (replyBubble) {
+      replyBubble.classList.remove("streaming");
+      replyBubble.textContent = replyBubble.textContent
+        ? `${replyBubble.textContent}\n\n${error.message}`
+        : `Sorry, I couldn't complete that reply. ${error.message}`;
+      replyBubble.setAttribute("role", "alert");
+    } else {
+      const errorBubble = addMessage(
+        "assistant",
+        `Sorry, I couldn't complete that reply. ${error.message}`,
+      );
+      errorBubble.setAttribute("role", "alert");
+    }
   } finally {
     setBusy(false);
     input.value = "";
+    updateWhatsAppButton();
     input.focus();
     scrollToLatest();
   }
@@ -172,6 +266,17 @@ document.addEventListener("keydown", (event) => {
 form.addEventListener("submit", (event) => {
   event.preventDefault();
   void sendMessage(input.value);
+});
+
+input.addEventListener("input", updateWhatsAppButton);
+whatsappButton.addEventListener("click", (event) => {
+  const question = input.value.trim() || latestQuestion;
+  if (!question) {
+    event.preventDefault();
+    input.focus();
+    return;
+  }
+  whatsappButton.href = whatsappUrl(question);
 });
 
 quickPrompts.addEventListener("click", (event) => {
@@ -193,4 +298,13 @@ primaryNav.addEventListener("click", (event) => {
     menuToggle.setAttribute("aria-expanded", "false");
     menuToggle.setAttribute("aria-label", "Open navigation");
   }
+});
+
+updateWhatsAppButton();
+const historyReady = restoreSavedConversation().catch((error) => {
+  const warning = addMessage(
+    "assistant",
+    `I couldn't restore your previous conversation. You can continue chatting here. (${error.message})`,
+  );
+  warning.setAttribute("role", "alert");
 });
