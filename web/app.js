@@ -4,7 +4,6 @@ const closeButton = document.querySelector("#chat-close");
 const form = document.querySelector("#chat-form");
 const input = document.querySelector("#chat-input");
 const sendButton = document.querySelector("#send-button");
-const whatsappButton = document.querySelector("#whatsapp-button");
 const messages = document.querySelector("#chat-messages");
 const quickPrompts = document.querySelector("#quick-prompts");
 const status = document.createElement("div");
@@ -93,6 +92,7 @@ function renderContactLinks(bubble, text, question) {
   }
 
   bubble.append(document.createTextNode(text.slice(cursor)));
+  appendWhatsAppHandoff(bubble, text, question);
 }
 
 function whatsappUrl(question) {
@@ -100,10 +100,19 @@ function whatsappUrl(question) {
   return `https://wa.me/923091404002?text=${encodeURIComponent(message)}`;
 }
 
-function updateWhatsAppButton() {
-  const question = input.value.trim() || latestQuestion;
-  whatsappButton.href = question ? whatsappUrl(question) : "#";
-  whatsappButton.setAttribute("aria-disabled", String(!question));
+function appendWhatsAppHandoff(bubble, text, question) {
+  const mentionsPerson = /\b(?:real person|human(?: agent| support)?|live agent|representative|support team|someone from our team|our team)\b/i.test(text);
+  const mentionsContact = /\b(?:WhatsApp|talk|speak|chat|connect|continue|message|contact|reach out)\b/i.test(text);
+  if (!question || !mentionsPerson || !mentionsContact) return;
+
+  const button = document.createElement("a");
+  button.className = "whatsapp-handoff-button";
+  button.href = whatsappUrl(question);
+  button.target = "_blank";
+  button.rel = "noopener noreferrer";
+  button.textContent = "Continue on WhatsApp with a real person";
+  button.setAttribute("aria-label", "Continue this conversation on WhatsApp with a real person");
+  bubble.append(button);
 }
 
 async function restoreSavedConversation() {
@@ -131,7 +140,6 @@ async function restoreSavedConversation() {
     else renderContactLinks(bubble, message.content, latestQuestion);
   }
   if (conversation.length > 20) conversation.splice(0, conversation.length - 20);
-  updateWhatsAppButton();
 }
 
 function setBusy(isBusy) {
@@ -223,7 +231,6 @@ async function sendMessage(rawText) {
   try {
     await historyReady;
     latestQuestion = question;
-    updateWhatsAppButton();
     quickPrompts.hidden = true;
     addMessage("human", question);
     replyBubble = addMessage("assistant", "");
@@ -251,7 +258,6 @@ async function sendMessage(rawText) {
   } finally {
     setBusy(false);
     input.value = "";
-    updateWhatsAppButton();
     input.focus();
     scrollToLatest();
   }
@@ -266,17 +272,6 @@ document.addEventListener("keydown", (event) => {
 form.addEventListener("submit", (event) => {
   event.preventDefault();
   void sendMessage(input.value);
-});
-
-input.addEventListener("input", updateWhatsAppButton);
-whatsappButton.addEventListener("click", (event) => {
-  const question = input.value.trim() || latestQuestion;
-  if (!question) {
-    event.preventDefault();
-    input.focus();
-    return;
-  }
-  whatsappButton.href = whatsappUrl(question);
 });
 
 quickPrompts.addEventListener("click", (event) => {
@@ -300,7 +295,6 @@ primaryNav.addEventListener("click", (event) => {
   }
 });
 
-updateWhatsAppButton();
 const historyReady = restoreSavedConversation().catch((error) => {
   const warning = addMessage(
     "assistant",
