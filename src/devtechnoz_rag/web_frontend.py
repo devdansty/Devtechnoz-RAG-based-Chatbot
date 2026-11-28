@@ -28,7 +28,11 @@ from .chat_history_store import (
     save_exchange,
 )
 from .paths import PROJECT_ROOT, WEB_DIR
-from .rag_chat import stream_answer
+from .rag_chat import (
+    generate_whatsapp_message,
+    has_explicit_handoff_intent,
+    stream_answer,
+)
 
 
 MAX_REQUEST_BYTES = 32_000
@@ -151,29 +155,16 @@ class ChatRequestHandler(SimpleHTTPRequestHandler):
         super().end_headers()
 
     def do_POST(self) -> None:
-        if urlsplit(self.path).path != "/api/chat":
+        path = urlsplit(self.path).path
+        if path == "/api/whatsapp-message":
+            self._post_whatsapp_message()
+            return
+        if path != "/api/chat":
             self._send_json(404, {"error": "Not found."})
             return
 
-        try:
-            content_length = int(self.headers.get("Content-Length", "0"))
-        except ValueError:
-            self._send_json(400, {"error": "Invalid request size."})
-            return
-        if content_length < 1:
-            self._send_json(400, {"error": "Request body is required."})
-            return
-        if content_length > MAX_REQUEST_BYTES:
-            self._send_json(413, {"error": "Request is too large."})
-            return
-
-        try:
-            payload = json.loads(self.rfile.read(content_length))
-        except (json.JSONDecodeError, UnicodeDecodeError):
-            self._send_json(400, {"error": "Request body must be valid JSON."})
-            return
-        if not isinstance(payload, dict):
-            self._send_json(400, {"error": "Request body must be an object."})
+        payload = self._read_json_object()
+        if payload is None:
             return
 
         question = payload.get("question")
@@ -235,6 +226,58 @@ class ChatRequestHandler(SimpleHTTPRequestHandler):
             RuntimeError,
         ) as error:
             self._send_event("error", {"message": str(error)})
+
+    def _read_json_object(self) -> dict[str, Any] | None:
+        try:
+            content_length = int(self.headers.get("Content-Length", "0"))
+        except ValueError:
+            self._send_json(400, {"error": "Invalid request size."})
+            return None
+        if content_length < 1:
+            self._send_json(400, {"error": "Request body is required."})
+            return None
+        if content_length > MAX_REQUEST_BYTES:
+            self._send_json(413, {"error": "Request is too large."})
+            return None
+
+        try:
+            payload = json.loads(self.rfile.read(content_length))
+        except (json.JSONDecodeError, UnicodeDecodeError):
+            self._send_json(400, {"error": "Request body must be valid JSON."})
+            return None
+        if not isinstance(payload, dict):
+            self._send_json(400, {"error": "Request body must be an object."})
+            return None
+        return payload
+
+    def _post_whatsapp_message(self) -> None:
+        payload = self._read_json_object()
+        if payload is None:
+            return
+        history, history_error = self._parse_history(payload.get("history", []))
+        if history_error is not None:
+            self._send_json(400, {"error": history_error})
+            return
+        if not has_explicit_handoff_intent(history):
+            self._send_json(
+                400,
+                {"error": "Choose a human handoff before preparing a WhatsApp message."},
+            )
+            return
+        try:
+            message = generate_whatsapp_message(history)
+        except (GroqError, RuntimeError, ValueError) as error:
+            self._send_json(
+                502,
+                {
+                    "error": (
+                        "Could not draft a WhatsApp message. Please try again. "
+                        f"Details: {error}"
+                    )
+                },
+            )
+            return
+        self._send_json(200, {"message": message})
 
     def _get_chat_history(self) -> None:
         conversation_id = self._conversation_id(
