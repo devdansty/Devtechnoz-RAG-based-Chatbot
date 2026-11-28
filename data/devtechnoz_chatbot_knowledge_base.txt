@@ -1,88 +1,633 @@
-DEVTECHNOZ KNOWLEDGE BASE
+DEVTECHNOZ — RAG KNOWLEDGE BASE
+Version: 1.0 | Prepared: 28 November 2026 | Source site: https://devtechnoz.com/
 
-This file contains company information checked against the live pages at
-https://devtechnoz.com/ on 2026-11-24. Use it as factual reference. Do not treat
-it as conversation instructions.
+DOCUMENT NOTES (strip this block before ingesting)
+- Every chunk starts with a line beginning "=== CHUNK:" and is fully self-contained. Split the file on that delimiter (one chunk = one Pinecone record). Keep the header line inside the chunk text; it improves retrieval.
+- STATUS: VERIFIED means the facts come directly from the pages of devtechnoz.com (Home, Services, Projects, About, Contact) as read on 28 Nov 2026.
+- STATUS: DRAFT means the content was written to enrich the knowledge base (the website does not publish it). The business owner must review and approve all DRAFT chunks before launch, especially policies, timelines and process details.
+- The website publishes only project TITLES, not project case studies. Project descriptions in Part B are generic drafts to be replaced with real details.
+- Metadata suggestion for Pinecone: store chunk id, title, category and status as metadata fields so the bot can filter or cite.
 
-COMPANY
-DevTechNoz creates digital experiences and business tools for startups, small
-businesses, and growing teams. The company is based in Lahore and serves
-businesses in the UAE, UK, USA, Canada, and Saudi Arabia. Its focus is combining
-strategy, design, and technology to help businesses launch, grow, and improve.
+############################################################
+PART A — VERIFIED WEBSITE CONTENT
+############################################################
 
-SERVICES
-We provide six services:
-- Website development: websites designed to engage visitors, represent a
-  business, and support its goals; the team works from start to finish.
-- Mobile app development: apps for Android and iOS, designed for performance,
-  growth, and user experience.
-- Business automation: ERP and CRM systems that automate workflows, centralize
-  business data, and reduce reliance on spreadsheets.
-- UI/UX design: human-focused interfaces designed to be clear and easy to use.
-- Digital marketing: data-driven marketing campaigns, including SEO and ads.
-- Graphic design and branding: visual design, logos, and complete brand kits.
+=== CHUNK: A01 | TITLE: Company Overview | CATEGORY: company | STATUS: VERIFIED ===
+DevTechNoz (also written DevTechnoz or DevTechNoz; the website title is "DevTechNoz") is a software house and digital services company based in Lahore, Pakistan. Its tagline on the home page is "Your Ideal Partner in Digital Transformation". Its headline is "Crafting User Focused Digital Experiences".
 
-When asked what services we provide, name these six directly. Do not describe
-the way services are grouped in the site navigation or footer.
+The company describes its mission like this: whether a client is starting up or scaling up, DevTechNoz designs digital experiences that reflect the client's vision and speak to the client's audience.
 
-HOW WE WORK
-We focus on understanding a client's goals before choosing a solution. Our
-approach combines business strategy, design, and technology. We build around
-the client's workflows and goals rather than expecting the client to adapt to
-a fixed system. The company describes its communication as clear, fast, and
-human, and says it continues supporting clients after launch.
+DevTechNoz works closely with startups, small businesses and growing teams. It builds digital tools, from AI-integrated platforms to business automation systems, that solve real problems. Its stated promise is that the work is fast, affordable and future-ready.
 
-COMPANY VALUES
-We treat a client's vision as a partnership and give projects founder-level
-focus. We combine design and strategy to create useful results. We build
-adaptable technology intended to grow with a business, including automation
-and AI-integrated platforms.
+The company describes itself as "not a typical software house", and says that is on purpose.
 
-TECHNOLOGY
-The home page displays expertise in HTML, JavaScript, React, Next.js, Node.js,
-PHP, Laravel, Python, Java, C#, .NET, Ajax, Flutter, Android, iOS, PostgreSQL,
-MySQL, Microsoft SQL Server, Oracle, MongoDB, Firebase, Zapier, n8n, cloud, and
-Microsoft technologies. These are general technology labels; no specific
-technology is assigned to a particular service or project.
+Main service areas: website development, mobile app development, business automation (ERP and CRM systems), UI/UX design, digital marketing, and graphic designing.
 
-CLIENT FEEDBACK
-Client testimonials on the home page include:
-- One client said their CRM was improved in about two weeks and that the team
-  now uses it daily, including for inventory. This is one client's experience,
-  not a promised timeline or typical result.
-- Another client said their online store turned out better than expected and
-  praised the team's understanding of the requirements.
-- A client said the team's questions helped them rethink their system and that
-  the resulting internal dashboard was solid.
+Keywords: DevTechNoz, software house Lahore, web development company Pakistan, app development, ERP CRM, digital transformation, UI/UX, branding.
 
-CONTACT
-Phone: +92 (309) 1404-002
-Email: info@devtechnoz.com
-Location: Lahore, Pakistan
-Contact page: https://devtechnoz.com/contact/
+=== CHUNK: A02 | TITLE: Contact Details | CATEGORY: contact | STATUS: VERIFIED ===
+How to contact DevTechNoz:
+- Phone: +92 (309) 1404-002 (international format: +92 309 1404002). The Contact page writes it as +92 (309)-1404-002.
+- Email (listed in the website footer on every page): info@devtechnoz.com
+- Email (listed on the Contact page): contact@devtechnoz.com
+- Location: Based in Lahore (Pakistan).
+- Working days: Monday to Friday. The website does not publish specific opening hours.
+- Website: https://devtechnoz.com/
+- Contact page: https://devtechnoz.com/contact/
 
-OPENING DAYS AND HOURS
-We are open Monday to Friday.
+The website footer shows three social-media icon placeholders, but no social profile links are published on the site.
 
-When asked "When do you open?" or "What days are you open?", answer directly:
-"We're open Monday to Friday." Do not mention the website, footer, notes,
-sources, or that information is missing. Do not invent specific clock times.
-If someone explicitly asks for an exact opening time, direct them to call
-+92 (309) 1404-002 or email info@devtechnoz.com.
+If a visitor wants to start a project, the call to action on every page is "Share your vision", which leads to the Contact page.
 
-PORTFOLIO
-The website has a Projects page linked from the main navigation. For current
-work examples, direct visitors to https://devtechnoz.com/projects/. Do not
-invent project names, clients, technologies, results, or project details.
+=== CHUNK: A03 | TITLE: Contact Form Fields and How to Start a Project | CATEGORY: contact | STATUS: VERIFIED ===
+The DevTechNoz Contact page (https://devtechnoz.com/contact/) is titled "Contact Us" with the subheading "Get In Touch". It has an inquiry form with these fields:
+- Name (required): First and Last
+- Email (required)
+- Phone
+- Company name
+- Project Details (a free-text box describing the project)
+Then the visitor clicks Submit. The form needs JavaScript enabled in the browser.
 
-PROJECT ENQUIRIES
-Visitors can contact the team by phone, email, or the contact page to discuss
-their idea. Ask what they are looking to build and offer the most relevant
-service. Do not promise prices, delivery dates, or business results.
+Below the form, the page has a "Get In Touch With Us" section with three items: Our Location (Based In Lahore), Phone Number (+92 (309)-1404-002) and Email Us (contact@devtechnoz.com).
 
-SOURCE PAGES
-Home: https://devtechnoz.com/
-Services: https://devtechnoz.com/services-2/
-About: https://devtechnoz.com/about/
-Projects: https://devtechnoz.com/projects/
-Contact: https://devtechnoz.com/contact/
+The Projects page and home page also offer a "See It in Action — No Cost Demo" button which leads to the same Contact page. This means visitors can ask DevTechNoz for a demo of its work at no cost.
+
+=== CHUNK: A04 | TITLE: Website Pages and Navigation | CATEGORY: website | STATUS: VERIFIED ===
+The DevTechNoz website (devtechnoz.com) has five main pages in its top navigation:
+1. Home — https://devtechnoz.com/
+2. Services — https://devtechnoz.com/services-2/
+3. Works (the projects page) — https://devtechnoz.com/projects/
+4. About — https://devtechnoz.com/about/
+5. Contact — https://devtechnoz.com/contact/
+
+A "Contact Us" button appears in the header on every page.
+
+The footer lists Quick Links: About, Projects, Contact, Services, Privacy Policy and Terms Of Use. The Privacy Policy and Terms Of Use links exist in the footer, but at the time of writing they do not lead to published pages. The website footer says "Copyright © 2025 Devtechnoz. Powered by Devtechnoz."
+
+The footer also lists four service groups: Web & App Development, CRM/ERP System, Digital Marketing, and Branding & Graphic.
+
+=== CHUNK: A05 | TITLE: About DevTechNoz — Not a Typical Software House | CATEGORY: about | STATUS: VERIFIED ===
+On the home page, in the "About us" section, DevTechNoz says: "We're Not A Typical Software House and that's on purpose." It lists five things that set it apart:
+
+1. Partnership That Powers Growth — Beyond launch, DevTechNoz stays with the client, refining, scaling and supporting the digital journey every step of the way.
+2. Designs That Drive Results — More than just pixels, DevTechNoz creates human-centered, conversion-focused designs that speak the brand and drive action.
+3. Precision Meets Purpose — DevTechNoz combines business logic with technical clarity, so every feature, flow and decision moves the client's goals forward.
+4. Solutions Built Around You — Custom systems adapt to the client's workflows, customers and goals, not the other way around.
+5. We Build, We Solve, We Scale — DevTechNoz does not copy-paste solutions. It works closely with startups, small businesses and growing teams to build digital tools, from AI-integrated platforms to business automation systems, that solve real problems. Fast, affordable and future-ready, "that's how we code."
+
+=== CHUNK: A06 | TITLE: Company Values | CATEGORY: about | STATUS: VERIFIED ===
+The DevTechNoz About page has a section "Our Values" with the heading "More than code, built for impact". Three values:
+
+1. We Treat Your Vision Like Our Own — Every project DevTechNoz takes on gets founder-level focus and commitment. The client is not just a client but a partner in creation.
+2. Design + Strategy = Results — DevTechNoz blends clean visuals with sharp thinking. From UI/UX to backend, everything is built to convert, scale and impress.
+3. Tech That Grows With You — DevTechNoz does not just deliver a solution, it future-proofs it. From automation to AI, it builds tools that adapt to the client's growth.
+
+=== CHUNK: A07 | TITLE: Strengths and Capabilities | CATEGORY: about | STATUS: VERIFIED ===
+The Services page and About page of DevTechNoz have a section called "Our Strengths, Your Advantages". The text says DevTechNoz blends strategy, design and smart tech to create solutions that move businesses forward, and that what the company is great at is not just what it does but how it does it and who it does it for.
+
+The six strengths listed are: Website Development, App Development, Business Automation, Digital Marketing, UI/UX Design, and Graphic Designing.
+
+=== CHUNK: A08 | TITLE: Services Overview (All Six Services) | CATEGORY: services | STATUS: VERIFIED ===
+DevTechNoz offers six core services. The Services page is titled "What We Do Best For Your Growth" on the home page.
+
+1. Website Development — "Your website should do more than exist — it should engage, convert, and represent your vision. We make that happen, start to finish." (Button: See Our Web Work)
+2. Mobile App Development (called App Development on the Services page) — "Have an idea? Let's build it into a sleek, powerful app for Android or iOS, tailored for performance, growth, and your users' experience." (Button: Build My App)
+3. Business Automation — "Still stuck in spreadsheets? We design ERP & CRM systems that automate workflows, centralize data, and help you scale without the stress." (Button: Streamline My Business)
+4. UI/UX Design — "Good design isn't just pretty. It solves problems. We craft smooth, human-first interfaces that feel natural and turn users into loyal customers." (Button: Let's Design)
+5. Digital Marketing — "You don't need more noise. You need results. From SEO to ads, we craft data-driven campaigns that attract the right customers to you." (Button: Grow My Audience)
+6. Graphic Designing — "Your visuals say everything before you do. We design bold, brand-aligned graphics, from logos to full kits, that actually connect with people." (Button: Get Branded Now)
+
+=== CHUNK: A09 | TITLE: Website Development Service | CATEGORY: services | STATUS: VERIFIED ===
+Service: Website Development at DevTechNoz.
+Official description: "Your website should do more than exist — it should engage, convert, and represent your vision. We make that happen, start to finish."
+This means DevTechNoz handles website projects end to end, from idea to launch. The site's call to action is "See Our Web Work". Related projects shown on the Works page: E-commerce Web, Travel Agency Website, and Mind Dialogue Website & App.
+Technologies listed on the site that are relevant to web work: HTML, JavaScript, React, Next JS, Node Js, PHP, Laravel, Ajax, .Net, C#, MySQL, MongoDB, Firebase.
+
+=== CHUNK: A10 | TITLE: Mobile App Development Service | CATEGORY: services | STATUS: VERIFIED ===
+Service: Mobile App Development at DevTechNoz (called "App Development" on the Services page).
+Official description: "Have an idea? Let's build it into a sleek, powerful app for Android or iOS — tailored for performance, growth, and your users' experience."
+DevTechNoz builds apps for both Android and iOS. The call to action is "Build My App". Related projects on the Works page: SmartLogix App, App, and Mind Dialogue Website & App.
+Technologies listed on the site that are relevant to app work: Flutter, Android, iOS, Firebase, Java, C#, .Net, Node Js.
+
+=== CHUNK: A11 | TITLE: Business Automation Service (ERP and CRM) | CATEGORY: services | STATUS: VERIFIED ===
+Service: Business Automation at DevTechNoz.
+Official description: "Still stuck in spreadsheets? We design ERP & CRM systems that automate workflows, centralize data, and help you scale without the stress."
+DevTechNoz designs ERP (Enterprise Resource Planning) and CRM (Customer Relationship Management) systems. The call to action is "Streamline My Business". Related projects on the Works page: ERP system and CRM system.
+Automation tools listed on the site: Zapier and n8n. Database technologies listed: MySQL, MSSQL, Oracle, MongoDB, Firebase and PostgreSQL.
+The home page footer calls this service line "CRM/ERP System".
+A client testimonial (Zack Archer, Businessman) says his CRM was a mess, DevTechNoz made it work in about two weeks, and the team now uses it daily, including for inventory.
+
+=== CHUNK: A12 | TITLE: UI/UX Design Service | CATEGORY: services | STATUS: VERIFIED ===
+Service: UI/UX Design at DevTechNoz.
+Official description: "Good design isn't just pretty. It solves problems. We craft smooth, human-first interfaces that feel natural and turn users into loyal customers."
+The call to action is "Let's Design". Related projects on the Works page: UI/UX Design, UI Design and Color Palette. The Works page has a UI/UX filter category.
+DevTechNoz describes its design approach as human-centered and conversion-focused.
+
+=== CHUNK: A13 | TITLE: Digital Marketing Service | CATEGORY: services | STATUS: VERIFIED ===
+Service: Digital Marketing at DevTechNoz.
+Official description: "You don't need more noise. You need results. From SEO to ads, we craft data-driven campaigns that attract the right customers to you."
+Digital marketing at DevTechNoz covers SEO (search engine optimization) and advertising, using data-driven campaigns. The call to action is "Grow My Audience". The home-page footer lists the line "Digital Marketing".
+A client testimonial (Usman Javed, Marketing Guy) says DevTechNoz handled their landing page and lead form setup "like pros".
+
+=== CHUNK: A14 | TITLE: Graphic Designing and Branding Service | CATEGORY: services | STATUS: VERIFIED ===
+Service: Graphic Designing at DevTechNoz.
+Official description: "Your visuals say everything before you do. We design bold, brand-aligned graphics — from logos to full kits — that actually connect with people."
+This covers logos and full brand kits. The call to action is "Get Branded Now". The footer groups this service as "Branding & Graphic".
+
+=== CHUNK: A15 | TITLE: Why Choose DevTechNoz | CATEGORY: about | STATUS: VERIFIED ===
+The home page section "Why Us?" is titled "Built Different, Built For You". It gives three reasons to choose DevTechNoz:
+
+1. Clear. Fast. Human. — DevTechNoz listens, replies fast and speaks the client's language, not just developer-speak. Clear communication is the baseline, not a bonus.
+2. Strategy Before Screens. — DevTechNoz asks "why" before it asks "how". This avoids wasted time, broken budgets and features no one uses.
+3. Results Over Deliverables. — Clients are not there just for a website or an app. They want more leads, less manual work and higher retention, and DevTechNoz understands that.
+
+=== CHUNK: A16 | TITLE: Projects Overview — All Ten Listed Projects | CATEGORY: projects | STATUS: VERIFIED ===
+The DevTechNoz "Our Projects" page (Works, https://devtechnoz.com/projects/) has the headline "Work that speaks for itself" on the home page and shows ten projects. The website publishes only the project titles, with a filter for All, App, UI/UX and Design.
+
+The ten projects shown are:
+1. Mind Dialogue Website & App
+2. UI/UX Design (listed as "UI /UXDesign" on the site)
+3. ERP system
+4. CRM system
+5. App
+6. Color Palette (spelled "Color Pallette" on the site)
+7. UI Design
+8. E-commerce Web
+9. SmartLogix App
+10. Travel Agency Website
+
+Detailed case-study pages for these projects are not published on the website, and the site does not say which filter category (App, UI/UX or Design) each project belongs to.
+
+The Works page says: "From Ideas to Impact — What you see here isn't just design or code, it's real problems solved, brands elevated, and ideas brought to life through smart digital thinking." And: "This is Just the Beginning — We've launched, scaled, and streamlined, and we're ready for what's next. Got something big in mind? Let's build it."
+Visitors can ask for "See It in Action — No Cost Demo" via the Contact page.
+
+=== CHUNK: A17 | TITLE: Client Testimonials (All Four) | CATEGORY: testimonials | STATUS: VERIFIED ===
+The home page section "What People Say About Us" shows four testimonials:
+
+1. Zack Archer, Businessman: "Our CRM was honestly a mess but they somehow made it all work in like 2 weeks. Now everything just runs smoother and my team is happy. We use it daily for inventory too."
+2. Sarah Safa, Content Creator: "I didn't even have to explain twice. They just got it and did the job right. Felt like they actually care about what I wanted. They made our online store so much better than I imagined."
+3. Usman Javed, Marketing Guy: "These guys don't waste time. No long meetings, no confusion, just clean work and fast replies. They handled our landing page and lead form setup like pros."
+4. Roy Mccoy, Operations Lead: "What I liked is they ask questions that made me rethink parts of our system and that helped us a lot. They think before building. Our internal dashboard came out really solid."
+
+Themes across the testimonials: fast delivery (a CRM in about 2 weeks), clear communication with few long meetings, understanding the client's needs the first time, strategic questions before building, and strong results in CRM, e-commerce, landing page, lead form and internal dashboard work.
+
+=== CHUNK: A18 | TITLE: Technology Stack and Expertise | CATEGORY: technology | STATUS: VERIFIED ===
+The home page section "Expertise And Technology" lists the technologies DevTechNoz works with:
+- Front end and web: HTML, JS (JavaScript), React, Next JS, Ajax
+- Back end and frameworks: Node Js, PHP, Laravel, Python, Java, C#, .Net
+- Mobile: Flutter, Android, iOS
+- Databases: MySQL, MSSQL, Oracle, MongoDB, PostgreSQL (listed on the site as "post SQl"), and "Lite" (most likely SQLite)
+- Cloud and backend services: Cloud, Firebase, Microsoft
+- Automation tools: Zapier, n8n
+
+The site's list also repeats ".Nt" (a typo for .NET). React is on the list, so DevTechNoz works with React.
+
+=== CHUNK: A19 | TITLE: Markets and Regions Served | CATEGORY: company | STATUS: VERIFIED ===
+DevTechNoz is based in Lahore, Pakistan, and serves businesses in the UAE, UK, USA, Canada and Saudi Arabia. The website footer says: "At DevTechnoz, we build smart systems, meaningful designs, and scalable tools to grow your business. From websites, mobile apps, CRMs, and ERPs to automation, UI/UX, and branding, everything is crafted for impact. Whether you're launching, scaling, or improving, we bring clarity in tech and strategy. Serving businesses across the UAE, UK, USA, Canada, and Saudi Arabia with solutions built for confident growth."
+
+=== CHUNK: A20 | TITLE: Calls to Action and Closing Message | CATEGORY: website | STATUS: VERIFIED ===
+Every page of the DevTechNoz website ends with the call to action "Your next big move starts here. You've got the vision, we bring the strategy, design, and tech to back it up. Let's build something that not only works, but wins." The button reads "Share your vision" and leads to https://devtechnoz.com/contact/.
+
+The home page hero button is "Let's build your vision". The Works page button is "See It in Action — No Cost Demo". Individual service buttons: See Our Web Work, Build My App, Streamline My Business, Let's Design, Grow My Audience, Get Branded Now.
+
+############################################################
+PART B — DRAFT ENRICHMENT: PROJECTS, SERVICE DETAILS AND PROCESS
+(STATUS: DRAFT — owner to review and replace with real details)
+############################################################
+
+NOTE ON PROJECT CHUNKS B01–B10: devtechnoz.com publishes only the TITLE of each project. The text below is a general outline of the kind of work each title represents, written from DevTechNoz's published services and technology list. Client names, dates, budgets, exact features and results are NOT published. The assistant must not invent them. If a visitor asks for more detail, the assistant should offer a no-cost demo or a conversation with the team via the Contact page.
+
+=== CHUNK: B01 | TITLE: Project — Mind Dialogue Website & App | CATEGORY: projects | STATUS: DRAFT ===
+Project title on devtechnoz.com: "Mind Dialogue Website & App".
+This project combines a website and a mobile app under one product identity, which shows DevTechNoz's ability to deliver a connected web and app experience. The website publishes only the title; the specific domain, client and features are not published.
+Typical scope of a combined website-and-app project at DevTechNoz: brand-aligned UI/UX design, a responsive marketing or product website, a mobile app for Android and iOS (for example built with Flutter), user accounts and a backend with a database, and a shared design language so the website and app feel like one product.
+Relevant DevTechNoz services: Website Development, Mobile App Development, UI/UX Design.
+For full details, visitors can request a demo through https://devtechnoz.com/contact/.
+
+=== CHUNK: B02 | TITLE: Project — UI/UX Design Work | CATEGORY: projects | STATUS: DRAFT ===
+Project title on devtechnoz.com: "UI/UX Design" (shown as "UI /UXDesign").
+This entry in the DevTechNoz portfolio represents user interface and user experience design work. The website does not publish the client or the product it was designed for.
+Typical scope of DevTechNoz UI/UX design work: understanding the users and the business goal, user flows and wireframes, high-fidelity screen designs, interactive prototypes, a consistent visual style, and a design hand-off to developers. DevTechNoz describes its design as human-first, problem-solving and conversion-focused.
+Relevant DevTechNoz service: UI/UX Design. The Works page has a UI/UX filter, but the site does not say which projects sit under it.
+
+=== CHUNK: B03 | TITLE: Project — ERP System | CATEGORY: projects | STATUS: DRAFT ===
+Project title on devtechnoz.com: "ERP system".
+This project is an Enterprise Resource Planning system, which is a core part of DevTechNoz's Business Automation service. The website does not publish the client or the industry.
+Typical scope of a DevTechNoz ERP project: centralizing business data in one system and automating workflows such as inventory and stock, purchasing, sales and orders, invoicing, finance and reporting, HR or employee records, and role-based access for different team members, with dashboards for managers. DevTechNoz's stated goal for ERP and CRM work is to replace spreadsheets, automate workflows, centralize data and help businesses scale without stress.
+Relevant technologies on the DevTechNoz stack: Laravel, PHP, .Net, C#, Node Js, MySQL, MSSQL, Oracle, PostgreSQL, Zapier, n8n.
+Relevant service: Business Automation.
+
+=== CHUNK: B04 | TITLE: Project — CRM System | CATEGORY: projects | STATUS: DRAFT ===
+Project title on devtechnoz.com: "CRM system".
+This project is a Customer Relationship Management system. The website does not publish the client's name or industry.
+Typical scope of a DevTechNoz CRM project: managing leads and customers in one place, tracking the sales pipeline, storing contact history, task and follow-up reminders, reports and dashboards, and integrations with email, forms and other tools through automation tools such as Zapier and n8n.
+A published client testimonial from Zack Archer (Businessman) describes a messy CRM that DevTechNoz got working in about two weeks, now used daily by his team, including for inventory. The testimonial does not say that it is the same project as the "CRM system" listed on the Works page, so the assistant should not claim they are the same.
+Relevant service: Business Automation.
+
+=== CHUNK: B05 | TITLE: Project — App (Mobile App) | CATEGORY: projects | STATUS: DRAFT ===
+Project title on devtechnoz.com: "App".
+This portfolio entry is a mobile application project. The website does not publish its name, client, platform or features.
+Typical scope of a DevTechNoz mobile app project: product discovery and feature planning, UI/UX design, development for Android and iOS (for example with Flutter or native Android), a backend and database (for example Firebase, Node Js with MongoDB or MySQL), testing on real devices, and help with store submission. DevTechNoz describes its apps as sleek, powerful and tailored for performance, growth and the users' experience.
+Relevant service: Mobile App Development. The Works page has an App filter, but the site does not say which projects sit under it.
+
+=== CHUNK: B06 | TITLE: Project — Color Palette | CATEGORY: projects | STATUS: DRAFT ===
+Project title on devtechnoz.com: "Color Palette" (spelled "Color Pallette" on the site).
+This entry represents brand and design work focused on color. The website does not publish the client.
+Typical scope of DevTechNoz color palette and brand styling work: choosing a primary, secondary and accent palette that fits the brand personality and audience, checking contrast and readability on screens, and documenting how colors are used across the website, app, social media and print so the brand looks consistent. This supports DevTechNoz's Graphic Designing and branding services, which cover logos and full brand kits.
+Relevant services: Graphic Designing, UI/UX Design. The Works page has a Design filter, but the site does not say which projects sit under it.
+
+=== CHUNK: B07 | TITLE: Project — UI Design | CATEGORY: projects | STATUS: DRAFT ===
+Project title on devtechnoz.com: "UI Design".
+This entry represents user interface design work (screens, components and visual style). The client and product are not published.
+Typical scope: designing clean, consistent screens and reusable components (buttons, forms, cards, navigation), typography and spacing rules, responsive layouts for web and mobile, and files prepared for developers to build from.
+Relevant service: UI/UX Design.
+
+=== CHUNK: B08 | TITLE: Project — E-commerce Web | CATEGORY: projects | STATUS: DRAFT ===
+Project title on devtechnoz.com: "E-commerce Web".
+This project is an online store website. The website does not publish the client or the platform used.
+Typical scope of a DevTechNoz e-commerce project: product catalog and categories, search and filters, shopping cart and checkout, payment gateway integration, customer accounts, order management, inventory sync, and a mobile-friendly, conversion-focused design.
+A published testimonial from Sarah Safa (Content Creator) says DevTechNoz made her online store much better than she imagined. The testimonial does not name the project, so the assistant should not claim it is the same as the "E-commerce Web" entry.
+Relevant services: Website Development, UI/UX Design.
+
+=== CHUNK: B09 | TITLE: Project — SmartLogix App | CATEGORY: projects | STATUS: DRAFT ===
+Project title on devtechnoz.com: "SmartLogix App".
+The name suggests a logistics or operations application, but the website does not describe what the app does, so the assistant should only say that it is a mobile app project listed in DevTechNoz's portfolio and that full details are available on request.
+Typical scope of a logistics-style app at DevTechNoz, if the visitor asks what such an app could include: order and delivery tracking, driver and team task assignment, real-time status updates, notifications, route or location features, reports and an admin dashboard.
+Relevant service: Mobile App Development.
+
+=== CHUNK: B10 | TITLE: Project — Travel Agency Website | CATEGORY: projects | STATUS: DRAFT ===
+Project title on devtechnoz.com: "Travel Agency Website".
+This project is a website for a travel business. The client is not named on the site.
+Typical scope of a DevTechNoz travel website: destination and package pages, search and inquiry or booking forms, galleries, itinerary pages, testimonials, multi-language or multi-currency options if needed, SEO-friendly structure and a fast, mobile-friendly design.
+Relevant services: Website Development, UI/UX Design, Digital Marketing (SEO).
+
+=== CHUNK: B11 | TITLE: Projects by Category and Technology | CATEGORY: projects | STATUS: DRAFT ===
+Quick map of DevTechNoz's published portfolio titles by type of work (grouping is by the meaning of each title; the website does not publish exact filter assignments):
+- Websites: E-commerce Web; Travel Agency Website; Mind Dialogue Website & App (also an app).
+- Mobile apps: SmartLogix App; App; Mind Dialogue Website & App.
+- Business systems (automation): ERP system; CRM system.
+- Design and branding: UI/UX Design; UI Design; Color Palette.
+If a visitor asks "What have you built?", the assistant can answer with this list, say that case-study details are shared on request, and invite the visitor to ask for a no-cost demo at https://devtechnoz.com/contact/.
+
+=== CHUNK: B12 | TITLE: Website Development — What a Project Includes | CATEGORY: services-detail | STATUS: DRAFT ===
+DevTechNoz website development, in more detail. DevTechNoz builds websites from start to finish: planning, design, development, testing and launch.
+Types of websites: company and brand websites, landing pages with lead forms, e-commerce stores, travel and service websites, portfolio and blog sites, web portals and dashboards, and web apps.
+What is typically included: strategy and sitemap, responsive UI/UX design, front-end development (HTML, JavaScript, React, Next JS), back-end development (Node Js, PHP, Laravel, Python, .Net), database setup (MySQL, MongoDB, PostgreSQL and others), contact and lead forms, basic on-page SEO setup, speed and mobile optimization, testing, and deployment.
+Why DevTechNoz: the website must "engage, convert, and represent your vision", so every page is designed around a goal such as leads, sales or sign-ups.
+
+=== CHUNK: B13 | TITLE: Mobile App Development — What a Project Includes | CATEGORY: services-detail | STATUS: DRAFT ===
+DevTechNoz mobile app development, in more detail. DevTechNoz builds apps for Android and iOS.
+Typical steps: idea and feature discussion, UI/UX design, prototype, development, backend and database, testing, and launch support.
+Technology options on DevTechNoz's stack: Flutter for one codebase on both Android and iOS, native Android, and iOS, with Firebase, Node Js, Java, C# and .Net on the back end and databases such as MongoDB, MySQL or PostgreSQL.
+Typical features: user sign-up and login, profiles, push notifications, payments, maps and location, chat, admin panels, and connections to other business systems.
+Goal: an app that is "sleek, powerful" and "tailored for performance, growth, and your users' experience".
+
+=== CHUNK: B14 | TITLE: Business Automation, ERP and CRM — What a Project Includes | CATEGORY: services-detail | STATUS: DRAFT ===
+DevTechNoz business automation, in more detail. The service is for businesses "still stuck in spreadsheets".
+CRM systems: lead and customer records, sales pipeline stages, follow-up reminders, activity history, reports.
+ERP systems: inventory and stock, purchasing, sales and orders, invoicing and finance, HR and staff records, reporting and dashboards, user roles and permissions.
+Workflow automation: connecting tools and automating repeated tasks with Zapier and n8n, for example sending form submissions into a CRM, syncing orders with inventory, or sending automatic notifications.
+Custom dashboards: DevTechNoz also builds internal dashboards (one published testimonial from an Operations Lead praises an internal dashboard).
+Benefits DevTechNoz promises: automated workflows, centralized data, easier scaling, and less manual work.
+Key technologies: Laravel, PHP, .Net, C#, Node Js, Python, MySQL, MSSQL, Oracle, PostgreSQL, MongoDB, Zapier, n8n.
+
+=== CHUNK: B15 | TITLE: UI/UX Design — What a Project Includes | CATEGORY: services-detail | STATUS: DRAFT ===
+DevTechNoz UI/UX design, in more detail.
+Typical deliverables: user research and goals, user flows, wireframes, interactive prototypes, high-fidelity UI designs for web and mobile, a style guide with colors, typography and components, and developer-ready hand-off.
+Principles: human-first interfaces that feel natural; design that solves problems rather than just looking pretty; and a focus on turning users into loyal customers.
+Because DevTechNoz designs and develops under one roof, designs are built with real development limits in mind, which reduces rework.
+
+=== CHUNK: B16 | TITLE: Digital Marketing — What a Project Includes | CATEGORY: services-detail | STATUS: DRAFT ===
+DevTechNoz digital marketing, in more detail. The service is "data-driven campaigns that attract the right customers", from SEO to ads.
+Typical services: search engine optimization (SEO) covering technical SEO, on-page SEO and content planning; paid advertising campaigns on search and social platforms; landing page and lead form setup (a published testimonial from Usman Javed describes this); tracking and analytics setup; and campaign reporting.
+Focus: results, such as more leads and customers, instead of just "more noise".
+
+=== CHUNK: B17 | TITLE: Graphic Designing and Branding — What a Project Includes | CATEGORY: services-detail | STATUS: DRAFT ===
+DevTechNoz graphic designing and branding, in more detail.
+Typical deliverables: logo design, color palette and typography, full brand kits (logo variations, brand guidelines, business cards and stationery), social media graphics, marketing materials such as flyers and brochures, and presentation or pitch-deck design.
+Goal: "bold, brand-aligned graphics" that "actually connect with people". Branding work links directly with UI/UX design, websites and marketing so the brand looks consistent everywhere.
+
+=== CHUNK: B18 | TITLE: AI and Smart Systems at DevTechNoz | CATEGORY: services-detail | STATUS: DRAFT ===
+DevTechNoz says on its website that it builds digital tools "from AI-integrated platforms to business automation systems", and that its values include building tools that adapt to growth "from automation to AI".
+In practice, AI integration can include: chatbots and virtual assistants for websites, retrieval-augmented generation (RAG) assistants that answer questions from a company's own documents, workflow automation with n8n or Zapier, smart search, and data entry or reporting automation.
+The website does not publish specific AI products or case studies, so for detailed AI project questions the assistant should invite the visitor to share their idea through the Contact page.
+Technologies on the stack that support this work: Python, Node Js, React, Cloud, Firebase, n8n, Zapier.
+
+=== CHUNK: B19 | TITLE: Industries and Types of Clients | CATEGORY: company | STATUS: DRAFT ===
+DevTechNoz works with startups, small businesses and growing teams (stated on the website). Examples of business types that match its published services and testimonials: e-commerce and online stores, travel and tourism, retail and inventory-based businesses (CRM and inventory use), marketing and lead-generation businesses (landing pages and forms), operations-heavy companies (internal dashboards and ERP), content creators and personal brands, and logistics-style businesses (SmartLogix App).
+Regions served: UAE, UK, USA, Canada and Saudi Arabia, with the team based in Lahore, Pakistan.
+
+=== CHUNK: B20 | TITLE: How DevTechNoz Works — Project Process | CATEGORY: process | STATUS: DRAFT ===
+DevTechNoz works in clear stages. The published principle is "Strategy before screens": the team asks "why" before "how" to avoid wasted time, broken budgets and unused features.
+1. Discovery and strategy: a conversation about goals, users, budget and timeline. The visitor starts by sharing their vision through the Contact page; a no-cost demo can also be requested.
+2. Proposal: scope, deliverables, timeline and cost for the project.
+3. Design: wireframes, prototypes and visual design, reviewed with the client.
+4. Development: building the website, app or system in stages with regular updates.
+5. Testing: quality checks on devices and browsers, performance and security checks.
+6. Launch: deployment and go-live support.
+7. Support and growth: "Beyond launch, we stay with you, refining, scaling, and supporting your digital journey."
+Communication: clear, quick replies and no long, confusing meetings (from the website and client testimonials).
+
+=== CHUNK: B21 | TITLE: Timelines — Indicative Ranges | CATEGORY: process | STATUS: DRAFT ===
+Timelines depend on scope and are confirmed in each proposal. Indicative ranges that DevTechNoz can use for first conversations:
+- Landing page with lead form: about 3 to 7 days.
+- Business or company website: about 2 to 4 weeks.
+- E-commerce store: about 4 to 8 weeks.
+- CRM or internal dashboard: about 2 to 6 weeks (one published testimonial describes a CRM working in about 2 weeks).
+- ERP system: about 2 to 4 months or more, built in phases.
+- Mobile app (one platform or Flutter cross-platform): about 6 to 12 weeks for a first version.
+- Logo and brand kit: about 1 to 2 weeks.
+- UI/UX design for an app or website: about 1 to 4 weeks.
+These are estimates only, not guarantees. The assistant should say that an exact timeline is provided after the team understands the project.
+
+=== CHUNK: B22 | TITLE: Pricing Approach | CATEGORY: pricing | STATUS: DRAFT ===
+DevTechNoz does not publish fixed prices on its website. Its published promise is that the work is "fast, affordable and future-ready" and that it avoids "broken budgets".
+Pricing approach: every project is quoted individually after a short discovery conversation, because cost depends on features, design depth, integrations, platforms and timeline. Larger systems such as ERP can be planned in phases so a client can start small and scale. The assistant must not quote specific prices. It should invite the visitor to share their project details through https://devtechnoz.com/contact/ or by email or phone to get a custom quote.
+
+=== CHUNK: B23 | TITLE: How to Get Started with DevTechNoz | CATEGORY: process | STATUS: DRAFT ===
+To start a project with DevTechNoz:
+1. Open https://devtechnoz.com/contact/ and fill in the form (name, email, phone, company name, project details), or email info@devtechnoz.com or contact@devtechnoz.com, or call +92 (309) 1404-002 (Monday to Friday).
+2. Describe the idea, the goal, the target users and any deadline or budget range.
+3. Optionally ask for the "No Cost Demo" to see DevTechNoz's work in action.
+4. The team replies with questions or a call, followed by a proposal with scope, timeline and cost.
+5. After approval, the project starts with discovery and design.
+
+=== CHUNK: B24 | TITLE: Glossary of Terms | CATEGORY: glossary | STATUS: DRAFT ===
+- ERP (Enterprise Resource Planning): one system that manages core business operations such as inventory, orders, finance and HR.
+- CRM (Customer Relationship Management): a system for managing leads, customers and sales activity.
+- UI (User Interface): how a website or app looks. UX (User Experience): how it feels to use.
+- SEO (Search Engine Optimization): improving a website so it ranks higher in search results.
+- Landing page: a focused page built to turn visitors into leads or sales.
+- Flutter: a framework for building Android and iOS apps from one codebase.
+- Business automation: using software to do repeated tasks automatically.
+- Zapier and n8n: tools that connect apps and automate workflows between them.
+- RAG (Retrieval-Augmented Generation): an AI approach where a chatbot answers from a specific knowledge base.
+- Brand kit: a set of logo files, colors, fonts and guidelines for a brand.
+
+############################################################
+PART C — COMPANY POLICIES
+(STATUS: DRAFT — the website's Privacy Policy and Terms Of Use links do not lead to published pages, so these are drafted placeholder policies. The owner must review and approve them, ideally with legal advice, before the chatbot presents them to clients. Final binding terms for any project are always set out in the project proposal or agreement.)
+############################################################
+
+=== CHUNK: C01 | TITLE: Privacy Policy | CATEGORY: policy | STATUS: DRAFT ===
+DevTechNoz Privacy Policy (summary).
+What we collect: information a visitor submits through the Contact form on devtechnoz.com (first and last name, email, phone number, company name and project details), information sent by email or phone, and basic website analytics data (the website uses Google Site Kit).
+Why we collect it: to reply to inquiries, prepare proposals, deliver projects, and improve the website and services.
+Sharing: we do not sell personal data. We share it only with trusted tools and service providers that help us run the business (for example email, project management, hosting and analytics providers), or when the law requires it.
+Security: we use reasonable technical and organizational measures to protect data.
+Retention: inquiry and project data is kept only as long as needed for the purpose or as required by law.
+Your rights: you can ask to access, correct or delete your personal data by emailing info@devtechnoz.com.
+Chatbot conversations: messages typed into the website assistant may be stored to improve answers and follow up on inquiries; visitors should not share passwords or payment card details in chat.
+
+=== CHUNK: C02 | TITLE: Terms of Use (Website) | CATEGORY: policy | STATUS: DRAFT ===
+DevTechNoz Website Terms of Use (summary).
+1. Using devtechnoz.com means accepting these terms.
+2. The content, text, designs, logos and graphics on the website belong to DevTechNoz or are used with permission, and may not be copied or reused without written permission.
+3. The information on the website is provided for general information and may be updated at any time. It is not a binding offer or contract; binding terms are only in a signed proposal or agreement.
+4. Visitors agree not to misuse the website, attempt to break its security, or submit false or harmful information through the forms.
+5. Links to other websites are provided for convenience; DevTechNoz is not responsible for their content.
+6. DevTechNoz is not liable for losses resulting from the use of the website to the extent permitted by law.
+Questions: info@devtechnoz.com.
+
+=== CHUNK: C03 | TITLE: Confidentiality and NDA Policy | CATEGORY: policy | STATUS: DRAFT ===
+DevTechNoz treats every client's idea and data as confidential. The team treats the client's vision like its own ("founder-level focus and commitment").
+- Information shared about a project (ideas, documents, source files, customer data, business processes) is used only to deliver that project.
+- Team members who work on a project are bound to keep it confidential.
+- DevTechNoz will sign a Non-Disclosure Agreement (NDA) before project discussions if the client asks.
+- DevTechNoz will not show a client's project in its portfolio without the client's permission, except where already public.
+Visitors can request an NDA by contacting info@devtechnoz.com.
+
+=== CHUNK: C04 | TITLE: Intellectual Property and Ownership Policy | CATEGORY: policy | STATUS: DRAFT ===
+Ownership of project work at DevTechNoz:
+- After the final payment is received, the client owns the custom deliverables created for them: the custom source code, designs, logos and content made specifically for the project.
+- DevTechNoz keeps ownership of its pre-existing tools, internal libraries and reusable components, and gives the client a license to use them as part of the delivered product.
+- Third-party software, plugins, fonts, stock images and open-source libraries remain under their own licenses.
+- DevTechNoz may show finished work in its portfolio with the client's permission.
+- Source code, design files and account access are handed over at project completion.
+
+=== CHUNK: C05 | TITLE: Payment Terms Policy | CATEGORY: policy | STATUS: DRAFT ===
+Payment terms at DevTechNoz are agreed in the proposal before work starts.
+- Small projects (such as a landing page or logo): typically an advance of about 50% to start and the balance on delivery.
+- Larger projects (websites, apps, CRM/ERP): payment split into milestones tied to deliverables, such as design approval, development progress and launch.
+- Ongoing services (digital marketing, maintenance): monthly billing.
+- The currency, payment method and invoicing details are set in the proposal, and DevTechNoz works with clients in the UAE, UK, USA, Canada, Saudi Arabia and Pakistan.
+- Final files, source code and live launch are released after the agreed payments are received.
+- Late payments may pause the project schedule.
+
+=== CHUNK: C06 | TITLE: Revision and Change Request Policy | CATEGORY: policy | STATUS: DRAFT ===
+How revisions and changes work at DevTechNoz:
+- Each proposal includes a defined number of design revision rounds (commonly two to three rounds per design stage). Feedback is collected in each round and applied together.
+- Fixing mistakes or bugs against the agreed scope is not charged as a change.
+- New features, new pages or changes in direction after approval are treated as change requests. DevTechNoz explains the impact on time and cost, and starts the work only after the client approves.
+- This keeps the project on budget and on schedule, in line with DevTechNoz's principle of avoiding "wasted time, broken budgets, and features no one uses".
+
+=== CHUNK: C07 | TITLE: Cancellation and Refund Policy | CATEGORY: policy | STATUS: DRAFT ===
+Cancellation and refunds at DevTechNoz:
+- A client may cancel a project at any time by written notice.
+- Work completed up to the cancellation date is billed, and a refund can be considered for any advance payment covering work that has not started.
+- Fees for time already spent, design work already delivered and third-party costs already paid (such as domains, licenses or ad spend) are not refundable.
+- If DevTechNoz cannot deliver a service as agreed, it will first try to fix the issue; if it cannot, an appropriate refund is discussed.
+- Refund requests should be sent to info@devtechnoz.com with the project name and reason. The final terms are in the project agreement.
+
+=== CHUNK: C08 | TITLE: Support, Maintenance and Bug-Fix Warranty | CATEGORY: policy | STATUS: DRAFT ===
+DevTechNoz stays with clients after launch: "Beyond launch, we stay with you, refining, scaling, and supporting your digital journey."
+- Post-launch bug-fix period: after launch, DevTechNoz fixes bugs in the delivered work (issues that do not match the agreed scope) free of charge for a period stated in the proposal, commonly 30 days.
+- Maintenance plans: optional monthly plans for updates, security patches, backups, monitoring, hosting help and small improvements.
+- New features and upgrades after the warranty period are quoted separately.
+- Support requests can be sent by email (info@devtechnoz.com) or phone (+92 (309) 1404-002) on working days, Monday to Friday.
+
+=== CHUNK: C09 | TITLE: Communication and Response Policy | CATEGORY: policy | STATUS: DRAFT ===
+DevTechNoz's published communication promise: "We listen, we reply fast, and we speak your language, not just developer-speak. Clear communication is our baseline, not a bonus." Clients also say there are "no long meetings, no confusion".
+- Working days: Monday to Friday. Based in Lahore, Pakistan (Pakistan Standard Time, UTC+5), and working with clients in the UAE, UK, USA, Canada and Saudi Arabia, so meeting times are arranged to suit the client's time zone.
+- Inquiries sent through the Contact form or email are answered quickly, normally within one working day.
+- Projects have a clear point of contact and regular progress updates.
+- Meetings are kept short and focused; decisions are summarized in writing.
+- Plain language, not technical jargon, is used with clients.
+
+=== CHUNK: C10 | TITLE: Data Security and Backup Policy | CATEGORY: policy | STATUS: DRAFT ===
+DevTechNoz handles client systems and data carefully:
+- Access to client accounts, servers and data is limited to the team members who need it.
+- Credentials are shared through secure channels and are not stored in plain text.
+- Applications are built with secure coding practices such as input validation, authentication, role-based access and encrypted connections (HTTPS).
+- Backups are recommended and can be set up for databases and files, with restore testing for business systems like CRM and ERP.
+- Security-related issues found in delivered work are treated as a priority.
+
+=== CHUNK: C11 | TITLE: Quality Assurance and Testing Policy | CATEGORY: policy | STATUS: DRAFT ===
+Quality at DevTechNoz: before delivery, work is tested for functionality, usability, responsiveness across devices and browsers, performance and security basics. Mobile apps are tested on real devices for Android and iOS where applicable. Clients review and approve features at agreed milestones, so there are no surprises at launch. DevTechNoz focuses on "results over deliverables": the goal is a product that works for the business, not just one that is delivered.
+
+=== CHUNK: C12 | TITLE: Third-Party Tools, Licenses and Hosting | CATEGORY: policy | STATUS: DRAFT ===
+Projects may use third-party services such as hosting and cloud, domains, payment gateways, SMS or email services, map or API services, app store accounts, and paid plugins or software licenses. These costs are separate from DevTechNoz's development fees unless the proposal says otherwise. Accounts for domains, hosting and app stores are best created in the client's own name so that the client keeps full ownership and control. DevTechNoz helps with the setup.
+
+=== CHUNK: C13 | TITLE: AI and Automation Responsible Use Policy | CATEGORY: policy | STATUS: DRAFT ===
+When DevTechNoz builds AI-integrated platforms and automation systems: client data is used only for the client's project; sensitive data is not sent to AI providers without the client's approval; clients are told which AI or automation tools are used (for example n8n, Zapier or an AI model provider); AI features are tested for accuracy, and human review is recommended for important decisions; and automated workflows are documented so the client can understand and maintain them.
+
+=== CHUNK: C14 | TITLE: Free Demo and Consultation Policy | CATEGORY: policy | STATUS: DRAFT ===
+DevTechNoz's website offers "See It in Action — No Cost Demo". Visitors can request a free demo of DevTechNoz's work, and an initial discussion about their idea is also free. To request one, use the Contact page (https://devtechnoz.com/contact/), email info@devtechnoz.com or call +92 (309) 1404-002 on a weekday. There is no obligation to hire DevTechNoz after a demo or consultation.
+
+=== CHUNK: C15 | TITLE: Client Responsibilities and Project Delays | CATEGORY: policy | STATUS: DRAFT ===
+For a project to stay on schedule, clients are asked to provide content, branding, access and feedback on time and to name one decision-maker. Delays in feedback, content or payment can move delivery dates. If a project is paused for a long time, DevTechNoz may reschedule the team and restart dates are agreed together. DevTechNoz tells the client early if anything threatens the timeline.
+
+############################################################
+PART D — FREQUENTLY ASKED QUESTIONS
+(Answers marked [VERIFIED] come from the website; those marked [DRAFT] are drafted guidance.)
+############################################################
+
+=== CHUNK: D01 | TITLE: FAQ — About DevTechNoz | CATEGORY: faq | STATUS: VERIFIED+DRAFT ===
+Q: What is DevTechNoz? [VERIFIED]
+A: DevTechNoz is a software house based in Lahore that builds websites, mobile apps, business automation systems (ERP and CRM), UI/UX designs, digital marketing campaigns and brand graphics. Its tagline is "Your Ideal Partner in Digital Transformation".
+
+Q: Where is DevTechNoz located? [VERIFIED]
+A: DevTechNoz is based in Lahore, Pakistan.
+
+Q: Which countries do you serve? [VERIFIED]
+A: DevTechNoz serves businesses across the UAE, UK, USA, Canada and Saudi Arabia.
+
+Q: Who do you work with? [VERIFIED]
+A: Startups, small businesses and growing teams, whether they are starting up or scaling up.
+
+Q: What makes DevTechNoz different? [VERIFIED]
+A: DevTechNoz describes itself as "not a typical software house", on purpose: it stays with clients beyond launch, designs for results, combines business logic with technical clarity, builds custom solutions around the client's workflow, and does not copy-paste solutions.
+
+=== CHUNK: D02 | TITLE: FAQ — Contact and Getting Started | CATEGORY: faq | STATUS: VERIFIED+DRAFT ===
+Q: How can I contact DevTechNoz? [VERIFIED]
+A: Phone: +92 (309) 1404-002. Email: info@devtechnoz.com or contact@devtechnoz.com. Contact form: https://devtechnoz.com/contact/. Based in Lahore. Working days: Monday to Friday.
+
+Q: What are your working days? [VERIFIED]
+A: Monday to Friday. Specific hours are not published; please use the contact form or email and the team will reply.
+
+Q: How do I start a project? [DRAFT]
+A: Share your vision through the Contact form (name, email, phone, company name and project details), or email or call. The team will get back to you to discuss your idea and prepare a proposal.
+
+Q: Can I get a demo? [VERIFIED]
+A: Yes. The website offers "See It in Action — No Cost Demo". Request it through the Contact page.
+
+Q: Do you reply quickly? [VERIFIED+DRAFT]
+A: Yes. Fast replies and clear communication are core to DevTechNoz, and clients mention fast replies in their testimonials. Inquiries are normally answered within one working day.
+
+=== CHUNK: D03 | TITLE: FAQ — Services | CATEGORY: faq | STATUS: VERIFIED+DRAFT ===
+Q: What services does DevTechNoz offer? [VERIFIED]
+A: Website Development, Mobile App Development, Business Automation (ERP and CRM), UI/UX Design, Digital Marketing, and Graphic Designing (logos and full brand kits).
+
+Q: Do you build mobile apps for both Android and iOS? [VERIFIED]
+A: Yes. DevTechNoz builds apps for Android or iOS, and its stack includes Flutter, Android and iOS.
+
+Q: Do you build ERP and CRM systems? [VERIFIED]
+A: Yes. Business Automation is a core service: "We design ERP & CRM systems that automate workflows, centralize data, and help you scale without the stress."
+
+Q: Do you offer SEO and advertising? [VERIFIED]
+A: Yes. Digital marketing covers everything "from SEO to ads" with data-driven campaigns.
+
+Q: Can you design a logo or a full brand kit? [VERIFIED]
+A: Yes. Graphic Designing covers logos and full brand kits.
+
+Q: Do you offer UI/UX design as a separate service? [DRAFT]
+A: Yes. UI/UX Design is one of the six core services, and it can be done on its own or as part of a website, app or system project.
+
+=== CHUNK: D04 | TITLE: FAQ — Technology | CATEGORY: faq | STATUS: VERIFIED+DRAFT ===
+Q: Which technologies do you use? [VERIFIED]
+A: HTML, JavaScript, React, Next JS, Node Js, PHP, Laravel, Python, Java, C#, .Net, Ajax, Flutter, Android, iOS, MySQL, MSSQL, Oracle, MongoDB, PostgreSQL, Firebase, Cloud, Zapier and n8n.
+
+Q: Do you work with React? [VERIFIED]
+A: Yes, React and Next JS are both on DevTechNoz's technology list.
+
+Q: Can you build with Flutter? [VERIFIED]
+A: Yes, Flutter is listed in the technology stack, which allows one codebase for Android and iOS.
+
+Q: Do you use automation tools? [VERIFIED]
+A: Yes, DevTechNoz works with Zapier and n8n.
+
+Q: Which databases do you work with? [VERIFIED]
+A: MySQL, MSSQL, Oracle, MongoDB, PostgreSQL and Firebase, among others.
+
+Q: Can you add AI to my product? [VERIFIED+DRAFT]
+A: DevTechNoz says it builds "AI-integrated platforms" and tools that adapt "from automation to AI". Share the idea through the Contact page to discuss what is possible.
+
+=== CHUNK: D05 | TITLE: FAQ — Projects and Portfolio | CATEGORY: faq | STATUS: VERIFIED+DRAFT ===
+Q: What projects have you done? [VERIFIED]
+A: The portfolio on the Works page lists: Mind Dialogue Website & App, UI/UX Design, ERP system, CRM system, App, Color Palette, UI Design, E-commerce Web, SmartLogix App and Travel Agency Website.
+
+Q: Can I see more details or case studies? [DRAFT]
+A: Detailed case studies are not published on the website, but you can ask for a "No Cost Demo" through the Contact page and the team will show relevant work.
+
+Q: Have you built e-commerce websites? [VERIFIED]
+A: Yes. "E-commerce Web" is in the portfolio, and a client says DevTechNoz made her online store "so much better than I imagined".
+
+Q: Have you built a CRM or ERP? [VERIFIED]
+A: Yes. Both "CRM system" and "ERP system" are in the portfolio. A client says DevTechNoz got a messy CRM working in about 2 weeks.
+
+Q: Have you built a travel website? [VERIFIED]
+A: Yes. "Travel Agency Website" is in the portfolio.
+
+Q: Do you do design-only projects? [VERIFIED]
+A: Yes. The portfolio includes UI/UX Design, UI Design and Color Palette work.
+
+=== CHUNK: D06 | TITLE: FAQ — Pricing and Budget | CATEGORY: faq | STATUS: DRAFT ===
+Q: How much does a website or app cost? [DRAFT]
+A: Cost depends on features, design, integrations and timeline, so DevTechNoz prepares a custom quote after understanding your project. Share your details through the Contact page.
+
+Q: Is DevTechNoz affordable? [VERIFIED]
+A: DevTechNoz describes its work as "fast, affordable, and future-ready" and aims to avoid "broken budgets".
+
+Q: Can I start small and grow later? [DRAFT]
+A: Yes. Projects such as ERP and CRM can be built in phases, starting with what matters most and expanding as the business grows ("Tech that grows with you").
+
+Q: How do payments work? [DRAFT]
+A: Typically an advance to start and the rest in milestones or on delivery, as agreed in the proposal. See the Payment Terms Policy.
+
+Q: Is the demo free? [VERIFIED]
+A: Yes, "No Cost Demo" is offered on the website.
+
+=== CHUNK: D07 | TITLE: FAQ — Timelines and Process | CATEGORY: faq | STATUS: DRAFT ===
+Q: How long does a project take? [DRAFT]
+A: It depends on scope. As a guide: a landing page takes days, a business website 2 to 4 weeks, a CRM 2 to 6 weeks and a mobile app first version 6 to 12 weeks. A client reports a CRM working in about 2 weeks. The exact timeline is given in your proposal.
+
+Q: What is your process? [DRAFT]
+A: Discovery and strategy, proposal, design, development, testing, launch, then support and growth. DevTechNoz follows "strategy before screens".
+
+Q: Will I have long meetings? [VERIFIED]
+A: No. Clients describe DevTechNoz as "no long meetings, no confusion, just clean work and fast replies".
+
+Q: Do you ask questions before building? [VERIFIED]
+A: Yes. "We ask why before we ask how." A client says the questions helped them rethink parts of their system.
+
+=== CHUNK: D08 | TITLE: FAQ — Support and After Launch | CATEGORY: faq | STATUS: VERIFIED+DRAFT ===
+Q: Do you support projects after launch? [VERIFIED]
+A: Yes. "Beyond launch, we stay with you, refining, scaling, and supporting your digital journey every step of the way."
+
+Q: Is there a warranty or free bug-fix period? [DRAFT]
+A: Yes, a post-launch bug-fix period is normally included, commonly 30 days, as stated in the proposal.
+
+Q: Do you offer maintenance plans? [DRAFT]
+A: Yes, optional monthly maintenance covering updates, security, backups and small improvements.
+
+Q: Who owns the code and designs? [DRAFT]
+A: After final payment, the client owns the custom deliverables built for them. See the Intellectual Property Policy.
+
+Q: Will you keep my project confidential? [DRAFT]
+A: Yes, and DevTechNoz will sign an NDA on request.
+
+=== CHUNK: D09 | TITLE: FAQ — Working with International Clients | CATEGORY: faq | STATUS: VERIFIED+DRAFT ===
+Q: Do you work with clients outside Pakistan? [VERIFIED]
+A: Yes. DevTechNoz serves clients in the UAE, UK, USA, Canada and Saudi Arabia.
+
+Q: Which time zone do you work in? [DRAFT]
+A: DevTechNoz is based in Lahore (Pakistan Standard Time, UTC+5) and arranges meeting times that suit the client's time zone. Working days are Monday to Friday.
+
+Q: Can we communicate remotely? [DRAFT]
+A: Yes. Projects are run remotely with email, calls and regular written updates.
+
+Q: Do you speak plain language, not just technical terms? [VERIFIED]
+A: Yes. "We speak your language, not just developer-speak."
+
+=== CHUNK: D10 | TITLE: FAQ — Policies and Legal | CATEGORY: faq | STATUS: DRAFT ===
+Q: Where can I read your privacy policy and terms? [VERIFIED+DRAFT]
+A: The website footer has Privacy Policy and Terms Of Use links, but the full pages are not currently published. A summary is available from this assistant; for the formal documents please email info@devtechnoz.com.
+
+Q: How do you handle my data? [DRAFT]
+A: Data submitted through the contact form or chat is used only to respond to your inquiry and deliver services, and is not sold. See the Privacy Policy.
+
+Q: What is your refund policy? [DRAFT]
+A: See the Cancellation and Refund Policy: work completed is billed, and refunds for unstarted work can be considered. Final terms are in the project agreement.
+
+Q: Can I request revisions? [DRAFT]
+A: Yes. Each design stage includes a set number of revision rounds, and new features are handled as change requests.
