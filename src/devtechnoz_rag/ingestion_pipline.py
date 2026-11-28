@@ -127,7 +127,7 @@ def ingest_documents(
 
     records = [
         {
-            "_id": f"chunk-{document.metadata['start_index']}",
+            "_id": f"chunk-{document.metadata['document_id']}",
             TEXT_FIELD: document.page_content,
             "source": source,
             "start_index": document.metadata["start_index"],
