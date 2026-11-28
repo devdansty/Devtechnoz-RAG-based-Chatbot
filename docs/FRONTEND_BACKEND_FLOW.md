@@ -28,8 +28,14 @@ Python web server ----------------------> web/index.html
   +-------------------------------------> web/styles.css and web/app.js
 
 Browser JavaScript
+  | GET /api/chat/history (conversation ID in request header)
+  v
+Python web server
+  | restore last 20 messages from PostgreSQL, if configured
+  v
+Browser JavaScript
   | POST /api/chat
-  | JSON: question + recent conversation history
+  | JSON: question + recent history + conversation ID
   v
 Python web server
   | validates the request
@@ -49,6 +55,8 @@ Server sends text/event-stream events as chunks arrive
   | event: done (or event: error)
   v
 Browser reads each event and updates the assistant message
+  |
+  +--> PostgreSQL stores completed question-and-answer exchange
 ```
 
 ## What happens when you send a message
@@ -56,9 +64,9 @@ Browser reads each event and updates the assistant message
 1. The page in [`index.html`](../web/index.html) loads the chat interface.
    It also loads [`app.js`](../web/app.js), which handles the launcher, input,
    conversation context, and streaming display.
-2. On submit, the browser sends a same-origin `POST /api/chat` request. Its JSON
-   body contains the new question and up to 20 recent messages from the current
-   page session.
+2. The browser keeps a random conversation ID in local storage. On page load it
+   requests the most recent 20 saved messages for that ID. On submit, it sends
+   the new question, that ID, and up to 20 recent messages to `POST /api/chat`.
 3. [`web_frontend.py`](../src/devtechnoz_rag/web_frontend.py) validates the
    question and history. It returns an HTTP `text/event-stream` response and
    calls `stream_answer()`.
@@ -74,10 +82,15 @@ Browser reads each event and updates the assistant message
    text chunks, not guaranteed one-character events.
 7. When generation finishes, Python sends a `done` event. If a handled error
    occurs, it sends an `error` event for the browser to display.
+8. When PostgreSQL is configured, Python saves each completed question-and-answer
+   exchange. The admin interface at `/admin` uses a password-protected API to
+   list, read, and delete transcripts.
 
-The page keeps its conversation context in browser memory. Refreshing the page
-starts a new web-chat context; the web interface does not save that chat to the
-server's conversation-history files.
+The browser sends recent messages as model context, while PostgreSQL stores the
+complete website transcript. These are separate from terminal chat history,
+which continues to use local JSON files. Website records have no automatic
+expiry and remain until an administrator deletes them. If `DATABASE_URL` is
+unset, the website chat remains usable but history is not persisted.
 
 ## Useful routes
 
@@ -86,13 +99,21 @@ server's conversation-history files.
 | `GET /` | Serves the landing page. |
 | `GET /styles.css` and `GET /app.js` | Serves the frontend assets. |
 | `GET /api/health` | Returns `{"status": "ok"}` for a deployment health check. |
+| `GET /api/chat/history` | Restores a visitor's recent messages using the `X-Conversation-ID` request header. |
 | `POST /api/chat` | Accepts a question and streams the answer as SSE. |
+| `GET /admin` | Serves the transcript administration page. |
+| `/api/admin/conversations` | Password-protected transcript list and delete-all API. |
+| `/api/admin/conversation` | Password-protected transcript read and delete-one API; conversation ID is sent in a request header. |
 
 ## Where configuration lives
 
 Locally, the Python backend reads API keys from the project-root `.env` file.
 On a hosting provider, set the same values as service environment variables.
 The browser never receives the Pinecone or Groq API keys.
+Set `DATABASE_URL` to enable PostgreSQL transcript storage and
+`CHAT_ADMIN_PASSWORD` to enable admin access. The admin username is `admin`;
+the password is supplied through the admin page and is not stored in the
+browser's local storage.
 
 The web server and the API use the same host and port. Locally, open
 `http://127.0.0.1:8000`; on a hosted service, the platform's URL points to this
