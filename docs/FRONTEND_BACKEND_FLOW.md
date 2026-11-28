@@ -57,6 +57,15 @@ Server sends text/event-stream events as chunks arrive
 Browser reads each event and updates the assistant message
   |
   +--> PostgreSQL stores completed question-and-answer exchange
+
+After explicit human-handoff consent:
+Browser JavaScript
+  | POST /api/whatsapp-message (up to 20 recent messages)
+  v
+Python validates the history and handoff intent
+  | ChatGroq drafts a short message from the visitor's stated interests
+  v
+Browser opens a wa.me link with the generated message prefilled
 ```
 
 ## What happens when you send a message
@@ -85,6 +94,12 @@ Browser reads each event and updates the assistant message
 8. When PostgreSQL is configured, Python saves each completed question-and-answer
    exchange. The admin interface at `/admin` uses a password-protected API to
    list, read, and delete transcripts.
+9. A WhatsApp button appears only after an explicit human-handoff request or a
+   clear yes to a direct human-handoff question. The browser then sends its
+   latest 20 messages to `POST /api/whatsapp-message`; the server validates the
+   consent context and uses the configured Groq model to draft a message from
+   the visitor's stated interests. The resulting `wa.me` link opens with that
+   draft prefilled. An ambiguous "yes" does not enable the button.
 
 The browser sends recent messages as model context, while PostgreSQL stores the
 complete website transcript. These are separate from terminal chat history,
@@ -101,6 +116,7 @@ unset, the website chat remains usable but history is not persisted.
 | `GET /api/health` | Returns `{"status": "ok"}` for a deployment health check. |
 | `GET /api/chat/history` | Restores a visitor's recent messages using the `X-Conversation-ID` request header. |
 | `POST /api/chat` | Accepts a question and streams the answer as SSE. |
+| `POST /api/whatsapp-message` | Validates explicit handoff intent and drafts a WhatsApp message from recent chat history with Groq. |
 | `GET /admin` | Serves the transcript administration page. |
 | `/api/admin/conversations` | Password-protected transcript list and delete-all API. |
 | `/api/admin/conversation` | Password-protected transcript read and delete-one API; conversation ID is sent in a request header. |
@@ -110,6 +126,9 @@ unset, the website chat remains usable but history is not persisted.
 Locally, the Python backend reads API keys from the project-root `.env` file.
 On a hosting provider, set the same values as service environment variables.
 The browser never receives the Pinecone or Groq API keys.
+The WhatsApp-draft endpoint uses the same server-side Groq credentials and
+model as chat. It is called only after the visitor explicitly chooses a human
+handoff and receives the latest 20 messages as context.
 Set `DATABASE_URL` to enable PostgreSQL transcript storage and
 `CHAT_ADMIN_PASSWORD` to enable admin access. The admin username is `admin`;
 the password is supplied through the admin page and is not stored in the
