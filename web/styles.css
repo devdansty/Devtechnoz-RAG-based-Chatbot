@@ -1170,29 +1170,27 @@ input:focus-visible {
   color: #64736e;
 }
 
-.whatsapp-button {
-  display: inline-flex;
-  min-height: 34px;
-  flex: 0 0 auto;
-  align-items: center;
-  justify-content: center;
-  padding: 0 9px;
+.message-bubble .whatsapp-handoff-button {
+  display: flex;
+  width: fit-content;
+  max-width: 100%;
+  margin-top: 11px;
+  padding: 8px 10px;
   border: 1px solid rgba(77, 243, 196, 0.3);
   border-radius: 8px;
+  background: rgba(77, 243, 196, 0.06);
   color: var(--mint);
   font-size: 9px;
   font-weight: 700;
+  line-height: 1.4;
   text-decoration: none;
-  transition: background 160ms ease, opacity 160ms ease;
+  white-space: normal;
+  transition: background 160ms ease, border-color 160ms ease;
 }
 
-.whatsapp-button:hover:not([aria-disabled="true"]) {
-  background: rgba(77, 243, 196, 0.1);
-}
-
-.whatsapp-button[aria-disabled="true"] {
-  cursor: not-allowed;
-  opacity: 0.45;
+.message-bubble .whatsapp-handoff-button:hover {
+  border-color: rgba(77, 243, 196, 0.6);
+  background: rgba(77, 243, 196, 0.14);
 }
 
 .send-button {
