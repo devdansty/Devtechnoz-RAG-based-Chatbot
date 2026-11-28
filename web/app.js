@@ -10,6 +10,10 @@ const status = document.createElement("div");
 const conversation = [];
 const conversationStorageKey = "devtechnoz-chat-conversation-id";
 const uuidPattern = /^[0-9a-f]{8}-[0-9a-f]{4}-[1-8][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i;
+const acknowledgmentPattern =
+  /^(?:yes|yeah|yep|sure|ok(?:ay)?|alright|no|nope)(?:\s*,?\s*please)?[.!?]*$|^(?:thanks|thank you|go ahead|please do|that works|sounds good)[.!?]*$/i;
+const greetingPattern =
+  /^(?:hi|hello|hey|good morning|good afternoon|good evening)[.!?]*$/i;
 let conversationId = localStorage.getItem(conversationStorageKey);
 if (!conversationId || !uuidPattern.test(conversationId)) {
   conversationId = crypto.randomUUID();
@@ -68,51 +72,142 @@ function addMessage(role, text) {
 }
 
 function renderContactLinks(bubble, text, question) {
-  const contactPattern =
-    /(?:\+?92[\s().-]*309[\s().-]*1404[\s().-]*002|\b(?:info|contact)@devtechnoz\.com\b)/gi;
+  const phonePattern = /(?:\+?92[\s().-]*309[\s().-]*1404[\s().-]*002)/gi;
+  const hasWhatsAppNumber = phonePattern.test(text);
+  phonePattern.lastIndex = 0;
+  const displayText = hasWhatsAppNumber
+    ? text
+        .replace(phonePattern, "")
+        .replace(/\bat\s*(?=[,.;!?]|$)/gi, "")
+        .replace(/\s+([,.;!?])/g, "$1")
+    : text;
+  const emailPattern = /\b(?:info|contact)@devtechnoz\.com\b/gi;
   let cursor = 0;
   bubble.replaceChildren();
 
-  for (const match of text.matchAll(contactPattern)) {
+  for (const match of displayText.matchAll(emailPattern)) {
     const contact = match[0];
     const start = match.index;
-    bubble.append(document.createTextNode(text.slice(cursor, start)));
+    bubble.append(document.createTextNode(displayText.slice(cursor, start)));
 
     const link = document.createElement("a");
     link.textContent = contact;
-    if (contact.includes("@")) {
-      link.href = `mailto:${contact}`;
-    } else {
-      link.href = whatsappUrl(question);
-      link.target = "_blank";
-      link.rel = "noopener noreferrer";
-    }
+    link.href = `mailto:${contact}`;
     bubble.append(link);
     cursor = start + contact.length;
   }
 
-  bubble.append(document.createTextNode(text.slice(cursor)));
-  appendWhatsAppHandoff(bubble, text, question);
+  bubble.append(document.createTextNode(displayText.slice(cursor)));
+  appendWhatsAppHandoff(bubble, text, question, hasWhatsAppNumber);
 }
 
-function whatsappUrl(question) {
-  const message = `Hi, I have a question about: ${question}`;
-  return `https://wa.me/923091404002?text=${encodeURIComponent(message)}`;
-}
-
-function appendWhatsAppHandoff(bubble, text, question) {
+function appendWhatsAppHandoff(bubble, text, question, hasWhatsAppNumber) {
   const mentionsPerson = /\b(?:real person|human(?: agent| support)?|live agent|representative|support team|someone from our team|our team)\b/i.test(text);
   const mentionsContact = /\b(?:WhatsApp|talk|speak|chat|connect|continue|message|contact|reach out)\b/i.test(text);
-  if (!question || !mentionsPerson || !mentionsContact) return;
+  const mentionsWhatsAppOffer = /\bWhatsApp\b/i.test(text) && /\b(?:connect|continue|message|contact|reach out|schedule|call)\b/i.test(text);
+  if (
+    (!hasWhatsAppNumber && !mentionsWhatsAppOffer && !(mentionsPerson && mentionsContact)) ||
+    !hasExplicitHandoffIntent(question)
+  ) {
+    return;
+  }
 
-  const button = document.createElement("a");
+  const button = document.createElement("button");
+  button.type = "button";
   button.className = "whatsapp-handoff-button";
-  button.href = whatsappUrl(question);
-  button.target = "_blank";
-  button.rel = "noopener noreferrer";
-  button.textContent = "Continue on WhatsApp with a real person";
+  button.disabled = true;
+  button.textContent = "Preparing a WhatsApp message...";
   button.setAttribute("aria-label", "Continue this conversation on WhatsApp with a real person");
   bubble.append(button);
+  button.addEventListener("click", () => void prepareWhatsAppMessage(button));
+  void prepareWhatsAppMessage(button);
+}
+
+function hasExplicitHandoffIntent(question) {
+  const normalizedQuestion = question.trim();
+  if (
+    /^(?:whatsapp|a real person|real person|a person|person|someone|human|human agent|representative|support team|our team)[.!?]*$/i.test(
+      normalizedQuestion,
+    )
+  ) {
+    return true;
+  }
+
+  const directRequest =
+    /\b(?:i want|i need|i(?:'d| would) like|please|can i|could i|can you|could you|connect me|put me in touch|talk to|speak to|chat with|message your|contact your|call)\b[\s\S]{0,100}\b(?:whatsapp|person|human(?: agent| support)?|live agent|representative|support team|your team|someone)\b/i;
+  const directWhatsAppRequest =
+    /\bwhatsapp\b/i.test(normalizedQuestion) &&
+    /\b(?:want|need|please|send|message|contact|connect|use|number)\b/i.test(
+      normalizedQuestion,
+    );
+  if (directRequest.test(normalizedQuestion) || directWhatsAppRequest) return true;
+  if (!acknowledgmentPattern.test(normalizedQuestion)) return false;
+
+  const previousAssistant = conversation
+    .slice(0, -2)
+    .reverse()
+    .find(([role]) => role === "assistant")?.[1];
+  if (!previousAssistant) return false;
+
+  const previousQuestions = [...previousAssistant.matchAll(/[^?]*\?/g)];
+  const lastQuestion = previousQuestions.length
+    ? previousQuestions[previousQuestions.length - 1][0]
+    : "";
+  return (
+    /\b(?:would you like|do you want|should i|can i|could i|may i)\b/i.test(lastQuestion) &&
+    /\b(?:real person|person|human|agent|representative|support team|our team|someone|whatsapp)\b/i.test(lastQuestion) &&
+    /\b(?:connect|talk|speak|chat|contact|message)\b/i.test(lastQuestion) &&
+    !/\bor\b/i.test(lastQuestion)
+  );
+}
+
+async function prepareWhatsAppMessage(button) {
+  const previousError = button.nextElementSibling;
+  if (previousError?.classList.contains("whatsapp-handoff-error")) {
+    previousError.remove();
+  }
+  button.disabled = true;
+  button.textContent = "Preparing a WhatsApp message...";
+
+  try {
+    const response = await fetch("/api/whatsapp-message", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ history: recentHistory() }),
+    });
+    const payload = await response.json().catch(() => ({}));
+    if (!response.ok) {
+      throw new Error(
+        payload.error || `WhatsApp message request failed (${response.status}).`,
+      );
+    }
+    if (typeof payload.message !== "string" || !payload.message.trim()) {
+      throw new Error("The server returned an empty WhatsApp message.");
+    }
+
+    const link = document.createElement("a");
+    link.className = "whatsapp-handoff-button";
+    link.href = `https://wa.me/923091404002?text=${encodeURIComponent(payload.message.trim())}`;
+    link.target = "_blank";
+    link.rel = "noopener noreferrer";
+    link.textContent = "Continue on WhatsApp with a real person";
+    link.setAttribute(
+      "aria-label",
+      "Continue this conversation on WhatsApp with a real person",
+    );
+    button.replaceWith(link);
+  } catch (error) {
+    button.disabled = false;
+    button.textContent = "Retry WhatsApp message";
+    const errorMessage = document.createElement("span");
+    errorMessage.className = "whatsapp-handoff-error";
+    errorMessage.setAttribute("role", "alert");
+    errorMessage.textContent =
+      error instanceof Error
+        ? `Couldn't prepare the message. ${error.message}`
+        : "Couldn't prepare the message. Please try again.";
+    button.after(errorMessage);
+  }
 }
 
 async function restoreSavedConversation() {
